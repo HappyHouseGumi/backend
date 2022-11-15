@@ -28,16 +28,17 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/board")
 public class RestBoardController {
 
-	private BoardService service;
 	private static final Logger log = LoggerFactory.getLogger(RestBoardController.class);
+
+	private HttpFlag flag = new HttpFlag();
+	
+	private BoardService service;
 
 	@Autowired
 	public RestBoardController(BoardService service) {
 		log.info("Board Controller 생성자 호출");
 		this.service = service;
 	}
-
-	private HttpFlag flag = new HttpFlag();
 
 	@ApiOperation(value = "보드 리스트를 불러온다.", notes = "보드 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping()
@@ -55,7 +56,6 @@ public class RestBoardController {
 			}
 			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,12 +72,11 @@ public class RestBoardController {
 			} else {
 				flag.setFlag("success");
 			}
-			flag.setData(null);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			flag.setFlag("fail");
 		}
+		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
@@ -85,7 +84,6 @@ public class RestBoardController {
 	@GetMapping("/{boardid}")
 	public ResponseEntity<?> viewBoard(@PathVariable("boardid") String boardId) {
 		log.debug("Board View : ", boardId);
-		System.out.println("HIHIHIHHIH " + boardId);
 		try {
 			List<Object> vboard = service.viewBoard(boardId);
 			if (vboard == null || vboard.isEmpty()) {
@@ -97,7 +95,6 @@ public class RestBoardController {
 			}
 			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -121,9 +118,7 @@ public class RestBoardController {
 				}
 				return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 			}
-
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -141,7 +136,6 @@ public class RestBoardController {
 				flag.setFlag("success");
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			flag.setFlag("fail");
 		}

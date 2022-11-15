@@ -13,13 +13,16 @@
 		<result column="reg_date" property="regDate"/>
 		<result column="hit" property="hit"/>
 		<result column="type" property="type"/>
+		<result column="state" property="state"/>
 	</resultMap>
 	
 	
 	<!-- List<Object> listBoard() throws SQLException; -->
 	<select id="listBoard" resultMap="BoardDto">
-		select id, user_id, subject, title, content, reg_date, hit, type
+		select id, user_id, subject, title, content, reg_date, hit, type, state
 		from board
+		where state != -1
+		order by id desc
 	</select>
 	
 	
@@ -55,7 +58,8 @@
 	
 	<!-- int deleteBoard(String boardId) throws SQLException; -->
 	<delete id="deleteBoard" parameterType="string">
-		delete from board
+		update board
+		set state = -1
 		where id = #{boardId}
 	</delete>
 	

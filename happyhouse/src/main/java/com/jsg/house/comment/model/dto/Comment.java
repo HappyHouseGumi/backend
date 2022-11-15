@@ -16,19 +16,22 @@ public class Comment {
 	private String content;
 	@ApiModelProperty(value = "작성일")
 	private String regDate;
+	@ApiModelProperty(value = "댓글상태 (삭제여부)")
+	private int state;
 	
 	public Comment() {
 		super();
 	}
-	public Comment(int id, int boardId, int userId, String content, String regDate) {
+	public Comment(int id, int boardId, int userId, String content, String regDate, int state) {
 		super();
 		this.id = id;
 		this.boardId = boardId;
 		this.userId = userId;
 		this.content = content;
 		this.regDate = regDate;
+		this.state = state;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -59,11 +62,17 @@ public class Comment {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
 	
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", boardId=" + boardId + ", userId=" + userId + ", content=" + content
-				+ ", regDate=" + regDate + "]";
+				+ ", regDate=" + regDate + ", state=" + state + "]";
 	}
 
 }
