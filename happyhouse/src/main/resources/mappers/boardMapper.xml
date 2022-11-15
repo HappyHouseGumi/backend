@@ -4,4 +4,59 @@
 
 <mapper namespace="com.jsg.house.board.model.mapper.BoardMapper">
 	
+	<resultMap type="board" id="BoardDto">
+		<result column="id" property="id"/>
+		<result column="user_id" property="userID"/>
+		<result column="subject" property="subject"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="hit" property="hit"/>
+		<result column="type" property="type"/>
+	</resultMap>
+	
+	
+	<!-- List<Object> listBoard() throws SQLException; -->
+	<select id="listBoard" resultMap="BoardDto">
+		select id, user_id, subject, title, content, reg_date, hit, type
+		from board
+	</select>
+	
+	
+	<!-- int writeBoard(Board board) throws SQLException; -->
+	<insert id="writeBoard" parameterType="board">
+		insert into board (user_id, subject, title, content, type)
+		values (#{userID}, #{subject}, #{title}, #{content}, #{type})
+	</insert>
+	
+	<!-- List<Object> viewBoard(String boardId) throws SQLException; -->
+	<select id="viewBoard" parameterType="string" resultMap="BoardDto">
+		select id, user_id, subject, title, content, reg_date, hit, type
+		from board
+		where id = #{boardId}
+	</select>
+	
+	<!-- int modifyBoard(Board board) throws SQLException; -->
+	<update id="modifyBoard" parameterType="board">
+		update board
+		<trim prefix="set" suffixOverrides=",">
+			<if test="subject != null">
+				subject = #{subject},
+			</if>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>
+		</trim>
+		where id =#{id}
+	</update>
+	
+	<!-- int deleteBoard(String boardId) throws SQLException; -->
+	<delete id="deleteBoard" parameterType="string">
+		delete from board
+		where id = #{boardId}
+	</delete>
+	
 </mapper>

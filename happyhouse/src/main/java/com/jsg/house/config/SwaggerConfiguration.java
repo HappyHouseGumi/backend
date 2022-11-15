@@ -18,7 +18,7 @@ public class SwaggerConfiguration {
 	
 	@Bean
 	public Docket api() {
-		final ApiInfo apiInfo = new ApiInfoBuilder().title("사용자관리 API")
+		final ApiInfo apiInfo = new ApiInfoBuilder().title("Happy House API")
 				.description("<h3>RestApi에 대한 문서를 제공한다.</h3>")
 				.contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com")).license("MIT License")
 				.version("0.0").build();
