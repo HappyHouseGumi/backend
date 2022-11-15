@@ -19,7 +19,7 @@ public class SwaggerConfiguration {
 	
 	@Bean
 	public Docket userApi() {
-		final ApiInfo apiInfo = new ApiInfoBuilder().title("사용자관리 API")
+		final ApiInfo apiInfo = new ApiInfoBuilder().title("Happy House API")
 				.description("<h3>UserApi에 대한 문서를 제공한다.</h3>")
 				.version("0.0").build();
 
