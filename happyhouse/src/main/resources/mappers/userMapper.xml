@@ -4,10 +4,13 @@
 
 <mapper namespace="com.jsg.house.user.model.mapper.UserMapper">
 	
-	<resultMap type="user" id="userDto">
+	<resultMap type="user" id="userDto" extends="userDtoNotPassword" >
+		<result column="password" property="password"/>
+	</resultMap>
+	
+	<resultMap type="user" id="userDtoNotPassword" >
 		<result column="id" property="id"/>
 		<result column="account" property="account"/>
-		<result column="password" property="password"/>
 		<result column="name" property="name"/>
 		<result column="email" property="email"/>
 		<result column="reg_date" property="regDate"/>
@@ -15,8 +18,47 @@
 		<result column="grade" property="grade"/>
 	</resultMap>
 	
-	<select id="list" resultMap="userDto">
+	<select id="getUserList" resultMap="userDto">
 		SELECT * FROM user;
 	</select>
+	
+	<select id="idCheck" parameterType="string" resultType="int">
+		SELECT count(id) 
+		FROM user
+		WHERE account = #{account}
+	</select>
+	<select id="loginUser" parameterType="map" resultMap="userDtoNotPassword">
+		SELECT id, account, name, email, reg_date, location, grade
+		FROM user
+		WHERE account = #{account} AND password = #{password};
+	</select>
+	<insert id="registUser" parameterType="user">
+		INSERT INTO user (account, password, name, email, location)
+		VALUES (#{account},#{password}, #{name}, #{email}, #{location})
+	</insert>
+	
+	<delete id="deleteUser" parameterType="int">
+		UPDATE user 
+		SET grade = -1 
+		WHERE id = #{id}
+	</delete>
+	
+	<update id="modifyUser" parameterType="map">
+		UPDATE user 
+		SET
+		<trim suffixOverrides=",">
+			<if test="account != null">
+				account = #{account},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="location != null">
+				location = #{location},
+			</if>
+		</trim>
+		WHERE
+			id = #{id}
+	</update>
 	
 </mapper>
