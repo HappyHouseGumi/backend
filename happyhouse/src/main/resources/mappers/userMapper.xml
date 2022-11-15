@@ -4,13 +4,11 @@
 
 <mapper namespace="com.jsg.house.user.model.mapper.UserMapper">
 	
-	<resultMap type="user" id="userDto" extends="userDtoNotPassword" >
-		<result column="password" property="password"/>
-	</resultMap>
 	
-	<resultMap type="user" id="userDtoNotPassword" >
+	<resultMap type="user" id="userDto" >
 		<result column="id" property="id"/>
 		<result column="account" property="account"/>
+		<result column="password" property="password"/>
 		<result column="name" property="name"/>
 		<result column="email" property="email"/>
 		<result column="reg_date" property="regDate"/>
@@ -27,7 +25,7 @@
 		FROM user
 		WHERE account = #{account}
 	</select>
-	<select id="loginUser" parameterType="map" resultMap="userDtoNotPassword">
+	<select id="loginUser" parameterType="map" resultMap="userDto">
 		SELECT id, account, name, email, reg_date, location, grade
 		FROM user
 		WHERE account = #{account} AND password = #{password};

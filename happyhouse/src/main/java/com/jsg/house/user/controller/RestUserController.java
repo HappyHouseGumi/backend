@@ -144,7 +144,6 @@ public class RestUserController {
 			User user = service.loginUser(map);
 			if (user != null) {
 				flag.setFlag("success");
-				System.out.println(user);
 				session.setAttribute("user", user);
 			}
 		} catch (Exception e) {

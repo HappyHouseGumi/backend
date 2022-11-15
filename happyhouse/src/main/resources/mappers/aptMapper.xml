@@ -2,7 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.jsg.house.apt.model.mapper.AptMapper">
+<mapper namespace="com.jsg.house.apt.model.mapper.AptInfoMapper">
+	<!-- @ApiModelProperty(value = "아파트 코드 번호")
+	private long aptcode;
+	@ApiModelProperty(value = "아파트 건설 연도")
+	private int buildYear;
+	@ApiModelProperty(value = "주소")
+	private String roadName;
+	@ApiModelProperty(value = "아파트 이름")
+	private String apartmentName;
+	@ApiModelProperty(value = "위도")
+	private String lat;
+	@ApiModelProperty(value = "경도")
+	private String lng; -->
+	
+	
+	<resultMap type="aptinfo" id="AptInfoDto">
+		<result column="apt_code" property="aptcode"/>
+		<result column="build_year" property="buildYear"/>
+		<result column="road_name" property="roadName"/>
+		<result column="apartment_name" property="apartmentName"/>
+		<result column="lat" property="lat"/>
+		<result column="lng" property="lng"/>
+	</resultMap>
+
+	<select id="getAptList" parameterType="string" resultMap="AptInfoDto">
+		SELECT apt_code, build_year, road_name, apartment_name, lat, lng  FROM houseinfo
+		WHERE dong_code = #{code}
+	</select>
 	
 	
 </mapper>

@@ -10,15 +10,15 @@ public class Interest {
 	@ApiModelProperty(value = "사용자번호")
 	private int userId;
 	@ApiModelProperty(value = "동코드")
-	private int dong_code;
+	private int dongCode;
 
 	public Interest() {	}
 
-	public Interest(int id, int userId, int dong_code) {
+	public Interest(int id, int userId, int dongCode) {
 		super();
 		this.id = id;
 		this.userId = userId;
-		this.dong_code = dong_code;
+		this.dongCode = dongCode;
 	}
 
 	public int getId() {
@@ -37,17 +37,17 @@ public class Interest {
 		this.userId = userId;
 	}
 
-	public int getDong_code() {
-		return dong_code;
+	public int getDongCode() {
+		return dongCode;
 	}
 
-	public void setDong_code(int dong_code) {
-		this.dong_code = dong_code;
+	public void setDongCode(int dongCode) {
+		this.dongCode = dongCode;
 	}
 
 	@Override
 	public String toString() {
-		return "Interest [id=" + id + ", userId=" + userId + ", dong_code=" + dong_code + "]";
+		return "Interest [id=" + id + ", userId=" + userId + ", dongCode=" + dongCode + "]";
 	}
 
 }
