@@ -1,4 +1,4 @@
-package com.jsg.house.Apt.model.service;
+package com.jsg.house.apt.model.service;
 
 public class AptDealServiceImpl implements AptDealService {
 

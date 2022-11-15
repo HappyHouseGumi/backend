@@ -1,4 +1,4 @@
-package com.jsg.house.Apt.model.dto;
+package com.jsg.house.apt.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
