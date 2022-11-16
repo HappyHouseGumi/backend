@@ -13,4 +13,5 @@ public interface QnAService {
 	int addQnA(QnA qna) throws Exception;
 	int deleteQnA(int id) throws Exception;
 	int modifyQnA(HashMap<String,Object> map) throws Exception;
+	Object detailQnA(int id) throws Exception;
 }
