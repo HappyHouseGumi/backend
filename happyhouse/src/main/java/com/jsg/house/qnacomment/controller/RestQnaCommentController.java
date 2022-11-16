@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jsg.house.board.controller.RestBoardController;
 import com.jsg.house.config.HttpFlag;
-import com.jsg.house.qnacomment.model.dto.QnAComment;
-import com.jsg.house.qnacomment.model.service.QnACommentService;
+import com.jsg.house.qnacomment.model.dto.QnaComment;
+import com.jsg.house.qnacomment.model.service.QnaCommentService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,16 +30,16 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @CrossOrigin
 @RequestMapping("/qnacomment")
-public class RestQnACommentController {
+public class RestQnaCommentController {
 
 	private static final Logger log = LoggerFactory.getLogger(RestBoardController.class);
 
 	private HttpFlag flag = new HttpFlag();
 
-	private QnACommentService service;
+	private QnaCommentService service;
 
 	@Autowired
-	public RestQnACommentController(QnACommentService service) {
+	public RestQnaCommentController(QnaCommentService service) {
 		log.info("Comment Controller 생성자 호출");
 		this.service = service;
 	}
@@ -47,14 +47,14 @@ public class RestQnACommentController {
 	@ApiOperation(value = "댓글 리스트를 불러온다.", notes = "댓글 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping("/{qnaId}")
 	public ResponseEntity<?> listQnAComment(@PathVariable int qnaId) {
+		System.out.println("ddddddddd");
 		log.debug("QnA Comment 불러오기.");
 		try {
-			List<Object> comment = service.listQnAComment(qnaId);
+			List<Object> comment = service.listQnaComment(qnaId);
 			if (comment == null || comment.isEmpty()) {
 				flag.setFlag("fail");
 				flag.setData(null);
 			} else {
-				log.debug(comment.toString());
 				flag.setFlag("success");
 				flag.setData(comment);
 			}
@@ -68,10 +68,10 @@ public class RestQnACommentController {
 
 	@ApiOperation(value = "댓글 작성을 불러온다.", notes = "댓글 작성을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping()
-	public ResponseEntity<?> writeQnAComment(@RequestBody QnAComment comment) {
+	public ResponseEntity<?> writeQnAComment(@RequestBody QnaComment comment) {
 		log.debug("Comment 작성하기 : ", comment);
 		try {
-			int checkSum = service.writeQnAComment(comment);
+			int checkSum = service.writeQnaComment(comment);
 			if (checkSum == 0) {
 				throw new Exception();
 			} else {
@@ -93,7 +93,7 @@ public class RestQnACommentController {
 		log.debug("Comment 수정하기 : ");
 		try {
 			map.put("id", id);
-			int checkSum = service.modifyQnAComment(map);
+			int checkSum = service.modifyQnaComment(map);
 			if (checkSum == 0) {
 				throw new Exception();
 			} else {
@@ -112,7 +112,7 @@ public class RestQnACommentController {
 	public ResponseEntity<?> deleteComment(@PathVariable("id") int id) {
 		log.debug("Comment 삭제하기 : ", id);
 		try {
-			int checkSum = service.deleteQnAComment(id);
+			int checkSum = service.deleteQnaComment(id);
 			if (checkSum == 0) {
 				throw new Exception();
 			} else {

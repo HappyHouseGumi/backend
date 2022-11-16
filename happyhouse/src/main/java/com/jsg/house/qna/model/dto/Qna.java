@@ -4,14 +4,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "QnA : QnA정보", description = "QnA의 상세 정보를 나타낸다.")
-public class QnA {
+public class Qna {
 
 	@ApiModelProperty(value = "글번호")
 	private int id;
 	@ApiModelProperty(value = "작성자 이름")
 	private String userName;
 	@ApiModelProperty(value = "작성자 비밀번호")
-	private int password;
+	private String password;
 	
 	@ApiModelProperty(value = "글제목")
 	private String title;
@@ -19,7 +19,7 @@ public class QnA {
 	private String content;
 	@ApiModelProperty(value = "작성일")
 	private String regDate;
-	public QnA(int id, String userName, int password,String title, String content, String regDate) {
+	public Qna(int id, String userName, String password,String title, String content, String regDate) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -59,10 +59,10 @@ public class QnA {
 		this.regDate = regDate;
 	}
 	
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
-	public void setPassword(int password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 	@Override
