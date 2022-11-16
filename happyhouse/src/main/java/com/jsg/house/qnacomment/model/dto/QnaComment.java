@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "QnA Comment : 댓글 정보", description = "댓글의 상세 정보를 나타낸다.")
-public class QnAComment {
+public class QnaComment {
 	
 	@ApiModelProperty(value = "댓글번호")
 	private int id;
@@ -19,10 +19,10 @@ public class QnAComment {
 	@ApiModelProperty(value = "댓글상태 (삭제여부)")
 	private int state;
 	
-	public QnAComment() {
+	public QnaComment() {
 		super();
 	}
-	public QnAComment(int id, int qnaId, int userId, String content, String regDate, int state) {
+	public QnaComment(int id, int qnaId, int userId, String content, String regDate, int state) {
 		super();
 		this.id = id;
 		this.qnaId = qnaId;
