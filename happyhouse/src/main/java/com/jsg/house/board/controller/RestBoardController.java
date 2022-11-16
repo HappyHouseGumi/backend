@@ -41,7 +41,7 @@ public class RestBoardController {
 		this.service = service;
 	}
 
-	@ApiOperation(value = "보드 리스트를 불러온다.", notes = "보드 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@ApiOperation(value = "Board 리스트를 불러온다.", notes = "게시판 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping()
 	public ResponseEntity<?> listBoard() {
 		log.debug("Board List : ");
@@ -62,7 +62,7 @@ public class RestBoardController {
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ApiOperation(value = "보드 write를 불러온다.", notes = "보드 글 쓰기를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@ApiOperation(value = "Board write를 불러온다.", notes = "게시판 글 쓰기를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping()
 	public ResponseEntity<?> writeBoard(@RequestBody Board board) {
 		log.debug("Board Write : ", board);
@@ -81,7 +81,7 @@ public class RestBoardController {
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "보드 view를 불러온다.", notes = "보드 글 상세 보기를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@ApiOperation(value = "Board view를 불러온다.", notes = "게시판 글 상세 보기를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping("/{boardid}")
 	public ResponseEntity<?> viewBoard(@PathVariable("boardid") String boardId) {
 		log.debug("Board View : ", boardId);
@@ -101,7 +101,7 @@ public class RestBoardController {
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ApiOperation(value = "보드 modify를 불러온다.", notes = "보드 글 수정을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@ApiOperation(value = "Board modify를 불러온다.", notes = "게시판 글 수정을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PutMapping()
 	public ResponseEntity<?> modifyBoard(@RequestBody HashMap<String, Object> map) {
 		log.debug("Board Modify : ", map);
@@ -125,7 +125,7 @@ public class RestBoardController {
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ApiOperation(value = "보드 delete를 불러온다.", notes = "보드 글 삭제를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@ApiOperation(value = "Board delete를 불러온다.", notes = "게시판 글 삭제를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@DeleteMapping("/{boardid}")
 	public ResponseEntity<?> deleteBoard(@PathVariable("boardid") String boardId) {
 		log.debug("Board Delete : ", boardId);
