@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jsg.house.qnacomment.model.mapper.QnACommentMapper">
+	
+	<!-- List<Object> listComment() throws SQLException; -->
+	<select id="listQnAComment" parameterType="int" resultType="QnAComment">
+		SELECT * FROM qnacomment_view WHERE qnaId = #{qnaId}
+	</select>
+
+	<!-- int writeComment(Comment comment) throws SQLException; -->
+	<insert id="writeQnAComment" parameterType="QnAComment">
+		insert into qnacomment (qna_id, user_id, content)
+		values (#{qnaId}, #{userId}, #{content})
+	</insert>
+
+	<!-- int modifyComment(Comment comment) throws SQLException; -->
+	<update id="modifyQnAComment" parameterType="map">
+		update qnacomment
+		set content = #{content}
+		where id = #{id}
+	</update>
+
+	<!-- int deleteComment(String commentId) throws SQLException; -->
+	<update id="deleteQnAComment" parameterType="int">
+		update qnacomment
+		set state = -1
+		where id = #{id}
+	</update>
+	
+</mapper>
