@@ -34,7 +34,7 @@ public class RestAptController {
 	private HttpFlag flag = new HttpFlag();
 	
 	@ApiOperation(value = "시도, 구군, 동 정보를 불러온다.", notes = "gubun : sido,gugun,dong 중 하나 입력 \n code : string(전체코드 적기 ex 1111010100)\n 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	@GetMapping("/{gugun}/{code}")
+	@GetMapping("/{gubun}/{code}")
 	public ResponseEntity<?> searchCode(@PathVariable(name = "gubun") String gubun, @PathVariable(name = "code") String code) {
 		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("gubun", gubun);
