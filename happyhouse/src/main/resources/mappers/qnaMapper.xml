@@ -8,10 +8,16 @@
 		SELECT * FROM qna_view
 	</select>
 	
+	<select id="detailQnA" parameterType="int" resultType="QnA">
+		SELECT * FROM qna_view WHERE id = #{id}
+	</select>
+	
 	<insert id="addQnA" parameterType="QnA">
 		INSERT INTO qna (username, password, title, content)
 		VALUES (#{userName}, #{password}, #{title}, #{content})
 	</insert>
+	
+	
 	
 	<update id="deleteQnA" parameterType="int">
 		UPDATE qna SET state = -1 WHERE id = #{id}

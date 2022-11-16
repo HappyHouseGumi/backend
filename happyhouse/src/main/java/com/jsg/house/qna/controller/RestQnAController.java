@@ -1,5 +1,6 @@
 package com.jsg.house.qna.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,7 @@ import io.swagger.annotations.ApiOperation;
 @Api("QnA(게시판) 컨트롤러 API V1") // http://localhost/happy/swagger-ui/index.html
 @RestController
 @RequestMapping("/qna")
+@CrossOrigin
 public class RestQnAController {
 
 	private static final Logger log = LoggerFactory.getLogger(RestQnAController.class);
@@ -39,10 +42,31 @@ public class RestQnAController {
 
 	@ApiOperation(value = "QnA 리스트를 불러온다.", notes = "QnA 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping()
-	public ResponseEntity<?> listBoard() {
+	public ResponseEntity<?> listQnA() {
 		log.debug("QnA List : ");
 		try {
 			List<Object> qnaList = service.listQnA();
+			log.debug(qnaList.toString());
+			if (qnaList == null || qnaList.isEmpty()) {
+				flag.setFlag("fail");
+				flag.setData(null);
+			} else {
+				flag.setFlag("success");
+				flag.setData(qnaList);
+			}
+			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	@ApiOperation(value = "QnA 상세 정보를 불러온다.", notes = "QnA 상세 정보를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/{id}")
+	public ResponseEntity<?> detailBoard(@PathVariable int id) {
+		log.debug("QnA List : ");
+		try {
+			List<Object> qnaList = new ArrayList<Object>();
+			qnaList.add(service.detailQnA(id));
 			log.debug(qnaList.toString());
 			if (qnaList == null || qnaList.isEmpty()) {
 				flag.setFlag("fail");

@@ -45,4 +45,11 @@ public class QnAServiceImpl implements QnAService {
 	}
 
 
+	@Override
+	public Object detailQnA(int id) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.detailQnA(id);
+	}
+
+
 }

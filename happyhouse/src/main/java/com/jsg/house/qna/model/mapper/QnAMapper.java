@@ -12,4 +12,5 @@ public interface QnAMapper {
 	int addQnA(QnA qna) throws SQLException;
 	int deleteQnA(int id) throws SQLException;
 	int modifyQnA(HashMap<String,Object> map) throws SQLException;
+	Object detailQnA(int id) throws SQLException;
 }
