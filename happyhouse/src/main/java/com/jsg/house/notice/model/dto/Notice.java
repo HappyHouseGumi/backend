@@ -16,19 +16,22 @@ public class Notice {
 	private String content;
 	@ApiModelProperty(value = "작성일")
 	private String regDate;
+	@ApiModelProperty(value = "글 상태 (삭제 여부")
+	private int state;
 	
 	public Notice() {
 		super();
 	}
-	public Notice(int id, int userID, String title, String content, String regDate) {
+	public Notice(int id, int userID, String title, String content, String regDate, int state) {
 		super();
 		this.id = id;
 		this.userID = userID;
 		this.title = title;
 		this.content = content;
 		this.regDate = regDate;
+		this.state = state;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -59,11 +62,17 @@ public class Notice {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
 	
 	@Override
 	public String toString() {
 		return "Notice [id=" + id + ", userID=" + userID + ", title=" + title + ", content=" + content + ", regDate="
-				+ regDate + "]";
+				+ regDate + ", state=" + state + "]";
 	}
 	
 }
