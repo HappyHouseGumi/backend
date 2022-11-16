@@ -1,6 +1,7 @@
 package com.jsg.house.board.model.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,13 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<Object> viewBoard(String boardId) throws Exception {
+		mapper.hitupdate(boardId);
 		return mapper.viewBoard(boardId);
 	}
 
 	@Override
-	public int modifyBoard(Board board) throws SQLException {
-		return mapper.modifyBoard(board);
+	public int modifyBoard(HashMap<String, Object> map) throws SQLException {
+		return mapper.modifyBoard(map);
 	}
 
 	@Override

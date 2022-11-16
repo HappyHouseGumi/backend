@@ -4,7 +4,7 @@
 
 <mapper namespace="com.jsg.house.board.model.mapper.BoardMapper">
 	
-	<resultMap type="board" id="BoardDto">
+	<!-- <resultMap type="board" id="BoardDto">
 		<result column="id" property="id"/>
 		<result column="user_id" property="userID"/>
 		<result column="subject" property="subject"/>
@@ -12,35 +12,40 @@
 		<result column="content" property="content"/>
 		<result column="reg_date" property="regDate"/>
 		<result column="hit" property="hit"/>
-		<result column="type" property="type"/>
 		<result column="state" property="state"/>
-	</resultMap>
+	</resultMap> -->
 	
 	
 	<!-- List<Object> listBoard() throws SQLException; -->
-	<select id="listBoard" resultMap="BoardDto">
-		select id, user_id, subject, title, content, reg_date, hit, type, state
-		from board
-		where state != -1
+	<select id="listBoard" resultType="board">
+		select id, userId, subject, title, content, regDate, hit
+		from board_view
 		order by id desc
 	</select>
 	
 	
 	<!-- int writeBoard(Board board) throws SQLException; -->
 	<insert id="writeBoard" parameterType="board">
-		insert into board (user_id, subject, title, content, type)
-		values (#{userID}, #{subject}, #{title}, #{content}, #{type})
+		insert into board (user_id, subject, title, content)
+		values (#{userID}, #{subject}, #{title}, #{content})
 	</insert>
 	
+	<!-- void hitupdate(String boardId) throws SQLException; -->
+	<update id="hitupdate" parameterType="string">
+		update board
+		set hit = hit + 1
+		where id =#{boardId}
+	</update>
+	
 	<!-- List<Object> viewBoard(String boardId) throws SQLException; -->
-	<select id="viewBoard" parameterType="string" resultMap="BoardDto">
-		select id, user_id, subject, title, content, reg_date, hit, type
-		from board
+	<select id="viewBoard" parameterType="string" resultType="board">
+		select id, userId, subject, title, content, regDate, hit
+		from board_view
 		where id = #{boardId}
 	</select>
 	
 	<!-- int modifyBoard(Board board) throws SQLException; -->
-	<update id="modifyBoard" parameterType="board">
+	<update id="modifyBoard" parameterType="map">
 		update board
 		<trim prefix="set" suffixOverrides=",">
 			<if test="subject != null">

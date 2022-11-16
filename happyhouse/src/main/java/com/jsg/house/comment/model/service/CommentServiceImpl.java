@@ -1,5 +1,6 @@
 package com.jsg.house.comment.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public int modifyComment(Comment comment) throws Exception {
-		return mapper.modifyComment(comment);
+	public int modifyComment(HashMap<String, Object> map) throws Exception {
+		return mapper.modifyComment(map);
 	}
 
 	@Override

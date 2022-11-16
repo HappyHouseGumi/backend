@@ -1,5 +1,6 @@
 package com.jsg.house.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -102,12 +103,12 @@ public class RestBoardController {
 
 	@ApiOperation(value = "보드 modify를 불러온다.", notes = "보드 글 수정을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PutMapping()
-	public ResponseEntity<?> modifyBoard(@RequestBody Board board) {
-		log.debug("Board Modify : ", board);
+	public ResponseEntity<?> modifyBoard(@RequestBody HashMap<String, Object> map) {
+		log.debug("Board Modify : ", map);
 		try {
-			int checkSum = service.modifyBoard(board);
+			int checkSum = service.modifyBoard(map);
 			if (checkSum != 0) {
-				String boardId = board.getId() + "";
+				String boardId = map.get("id") + "";
 				List<Object> mboard = service.viewBoard(boardId);
 				if (mboard == null || mboard.isEmpty()) {
 					flag.setFlag("fail");
