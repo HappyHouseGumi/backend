@@ -4,20 +4,19 @@
 
 <mapper namespace="com.jsg.house.comment.model.mapper.CommentMapper">
 
-	<resultMap type="comment" id="CommentDto">
+	<!-- <resultMap type="comment" id="CommentDto">
 		<result column="id" property="id" />
 		<result column="board_id" property="boardId" />
 		<result column="user_id" property="userId" />
 		<result column="content" property="content" />
 		<result column="reg_date" property="regDate" />
 		<result column="state" property="state" />
-	</resultMap>
+	</resultMap> -->
 	
 	<!-- List<Object> listComment() throws SQLException; -->
-	<select id="listComment" resultMap="CommentDto">
-		select id, board_id, user_id, content, reg_date, state
-		from comment
-		where state != -1
+	<select id="listComment" resultType="comment">
+		select id, boardId, userId, content, regDate
+		from comment_view
 		order by id desc
 	</select>
 
@@ -28,7 +27,7 @@
 	</insert>
 
 	<!-- int modifyComment(Comment comment) throws SQLException; -->
-	<update id="modifyComment" parameterType="comment">
+	<update id="modifyComment" parameterType="map">
 		update comment
 		set content = #{content}
 		where id = #{id}

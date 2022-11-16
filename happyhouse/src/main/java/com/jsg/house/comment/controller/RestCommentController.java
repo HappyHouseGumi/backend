@@ -1,5 +1,6 @@
 package com.jsg.house.comment.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -86,10 +87,10 @@ public class RestCommentController {
 	
 	@ApiOperation(value = "댓글 수정을 불러온다.", notes = "댓글 수정을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PutMapping()
-	public ResponseEntity<?> modifyComment(@RequestBody Comment comment) {
-		log.debug("Comment 수정하기 : ", comment);
+	public ResponseEntity<?> modifyComment(@RequestBody HashMap<String, Object> map) {
+		log.debug("Comment 수정하기 : ", map);
 		try {
-			int checkSum = service.modifyComment(comment);
+			int checkSum = service.modifyComment(map);
 			if (checkSum == 0) {
 				throw new Exception();
 			} else {

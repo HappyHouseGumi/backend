@@ -20,16 +20,13 @@ public class Board {
 	private String regDate;
 	@ApiModelProperty(value = "조회수")
 	private int hit;
-	@ApiModelProperty(value = "글타입 (자유게시판, QnA게시판)")
-	private int type;
 	@ApiModelProperty(value = "글상태 (삭제여부)")
 	private int state;
 	
 	public Board() {
 		super();
 	}
-	public Board(int id, int userID, String subject, String title, String content, String regDate, int hit, int type,
-			int state) {
+	public Board(int id, int userID, String subject, String title, String content, String regDate, int hit, int state) {
 		super();
 		this.id = id;
 		this.userID = userID;
@@ -38,7 +35,6 @@ public class Board {
 		this.content = content;
 		this.regDate = regDate;
 		this.hit = hit;
-		this.type = type;
 		this.state = state;
 	}
 	
@@ -84,12 +80,6 @@ public class Board {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	public int getType() {
-		return type;
-	}
-	public void setType(int type) {
-		this.type = type;
-	}
 	public int getState() {
 		return state;
 	}
@@ -100,7 +90,7 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board [id=" + id + ", userID=" + userID + ", subject=" + subject + ", title=" + title + ", content="
-				+ content + ", regDate=" + regDate + ", hit=" + hit + ", type=" + type + ", state=" + state + "]";
+				+ content + ", regDate=" + regDate + ", hit=" + hit + ", state=" + state + "]";
 	}
 	
 }
