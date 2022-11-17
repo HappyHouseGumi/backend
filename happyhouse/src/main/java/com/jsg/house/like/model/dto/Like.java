@@ -11,16 +11,18 @@ public class Like {
 	private int boardId;
 	@ApiModelProperty(value = "사용자번호")
 	private int userId;
+	@ApiModelProperty(value = "관심 글 상태")
+	private int state;
 	
 	public Like() {}
-	
-	public Like(int id, int boardId, int userId) {
+	public Like(int id, int boardId, int userId, int state) {
 		super();
 		this.id = id;
 		this.boardId = boardId;
 		this.userId = userId;
+		this.state = state;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -39,10 +41,16 @@ public class Like {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+
 	@Override
 	public String toString() {
-		return "Like [id=" + id + ", boardId=" + boardId + ", userId=" + userId + "]";
+		return "Like [id=" + id + ", boardId=" + boardId + ", userId=" + userId + ", state=" + state + "]";
 	}
 	
 }
