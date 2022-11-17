@@ -1,5 +1,6 @@
 package com.jsg.house.qnacomment.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -70,8 +71,10 @@ public class RestQnaCommentController {
 	@PostMapping()
 	public ResponseEntity<?> writeQnAComment(@RequestBody QnaComment comment) {
 		log.debug("Comment 작성하기 : ", comment);
+		List<Object> comments = new ArrayList<Object>();
 		try {
 			int checkSum = service.writeQnaComment(comment);
+			comments = service.listQnaComment(comment.getQnaId());
 			if (checkSum == 0) {
 				throw new Exception();
 			} else {
@@ -81,7 +84,7 @@ public class RestQnaCommentController {
 			e.printStackTrace();
 			flag.setFlag("fail");
 		}
-		flag.setData(null);
+		flag.setData(comments);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 	
