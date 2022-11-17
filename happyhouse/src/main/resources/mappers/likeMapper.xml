@@ -4,5 +4,23 @@
 
 <mapper namespace="com.jsg.house.like.model.mapper.LikeMapper">
 	
+	<!-- List<Object> listLike() throws SQLException; -->
+	<select id="listLike" resultType="likeBoard">
+		select id, boardId, userId, subject, title
+		from like_view
+	</select>
+
+	<!-- int registLike(Like like) throws SQLException; -->
+	<insert id="registLike" parameterType="like">
+		insert into `like` (board_id, user_id)
+		values (#{boardId}, #{userId})
+	</insert>
+
+	<!-- int deleteLike(String likeId) throws SQLException; -->
+	<update id="deleteLike" parameterType="string">
+		update `like`
+		set state = -1
+		where id = #{likeId}
+	</update>
 	
 </mapper>
