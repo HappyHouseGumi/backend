@@ -1,9 +1,8 @@
 package com.jsg.house.user.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jsg.house.config.HttpFlag;
 import com.jsg.house.user.model.dto.User;
+import com.jsg.house.user.model.service.JwtService;
 import com.jsg.house.user.model.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import springfox.documentation.annotations.ApiIgnore;
 
 @Api("유저 컨트롤러 API V1")
 @RequestMapping("/user")
@@ -34,7 +33,10 @@ public class RestUserController {
 
 	@Autowired
 	private UserService service;
-
+	
+	@Autowired
+	private JwtService jwtService;
+	
 	private HttpFlag flag = new HttpFlag();
 
 	@ApiOperation(value = "유저 리스트를 불러온다.", notes = "유저 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
@@ -56,7 +58,7 @@ public class RestUserController {
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
+	
 	@ApiOperation(value = "유저를 등록한다.", notes = "유저를 등록한다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping()
 	public ResponseEntity<?> registUser(@RequestBody User user) {
@@ -100,7 +102,7 @@ public class RestUserController {
 		}
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-
+	
 	@ApiOperation(value = "유저를 삭제한다.", notes = "유저를 삭제한다. account가 아닌 userId(index)를 넘겨준다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@DeleteMapping("/{userid}")
 	public ResponseEntity<?> deleteUser(@PathVariable(name = "userid") String userid) {
@@ -139,14 +141,20 @@ public class RestUserController {
 
 	@ApiOperation(value = "로그인을 한다.", notes = "로그인에 성공하면 'success', 실패하면 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/login")
-	public ResponseEntity<?> loginUser(@ApiIgnore HttpSession session,@RequestBody HashMap<String, String> map) {
+	public ResponseEntity<?> loginUser(@RequestBody HashMap<String, String> map) {
+		List<Object> data = new ArrayList<Object>();
 		flag.setFlag("fail");
-		flag.setData(null);
+//		flag.setData
 		try {
 			User user = service.loginUser(map);
 			if (user != null) {
 				flag.setFlag("success");
-				session.setAttribute("user", user);
+				int userId = user.getId();
+				String token = jwtService.createToken(userId);
+				map.clear();
+				map.put("access-token", token);
+				data.add(map);
+				flag.setData(data);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,11 +164,26 @@ public class RestUserController {
 
 	@ApiOperation(value = "로그아웃을 한다.", notes = "무조건 'success' 반환", response = String.class)
 	@GetMapping("/logout")
-	public ResponseEntity<?> logoutUser(@ApiIgnore HttpSession session) {
+	public ResponseEntity<?> logoutUser() {
 		flag.setData(null);
 		flag.setFlag("success");
-		session.invalidate();
+		
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 	
+	@PostMapping("/jwt")
+	public ResponseEntity<?> jwt(@RequestBody HashMap<String, String> map) {
+		flag.setFlag("fail");
+		flag.setData(null);
+		try {
+			boolean check = jwtService.checkToken(map.get("access-token"));
+			if (check) {
+				flag.setFlag("success");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
+	//checkToken
 }

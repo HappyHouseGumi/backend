@@ -31,8 +31,8 @@
 		WHERE account = #{account} AND password = #{password};
 	</select>
 	<insert id="registUser" parameterType="user">
-		INSERT INTO user (account, password, name, email, location)
-		VALUES (#{account},#{password}, #{name}, #{email}, #{location})
+		INSERT INTO user (account, password, name, email)
+		VALUES (#{account},#{password}, #{name}, #{email})
 	</insert>
 	
 	<delete id="deleteUser" parameterType="int">
