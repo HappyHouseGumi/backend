@@ -18,4 +18,6 @@ public interface UserService {
 	int idCheck(String account) throws Exception;
 
 	User loginUser(HashMap<String, String> map) throws Exception;
+
+	int findUserByEmail(String email) throws Exception;
 }

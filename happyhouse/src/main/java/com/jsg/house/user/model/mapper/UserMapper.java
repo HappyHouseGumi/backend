@@ -18,4 +18,6 @@ public interface UserMapper {
 	int idCheck(String account) throws SQLException;
 
 	User loginUser(HashMap<String, String> map) throws SQLException;
+
+	int findUserByEmail(String email) throws SQLException;
 }

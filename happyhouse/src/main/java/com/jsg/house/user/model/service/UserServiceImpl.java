@@ -50,5 +50,11 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return mapper.loginUser(map);
 	}
+
+	@Override
+	public int findUserByEmail(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.findUserByEmail(email);
+	}
 	
 }

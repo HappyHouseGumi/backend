@@ -30,6 +30,11 @@
 		FROM user
 		WHERE account = #{account} AND password = #{password};
 	</select>
+	
+	<select id="findUserByEmail" parameterType="string" resultType="int">
+		Select count(*) from user where email = #{email}
+	</select>
+	
 	<insert id="registUser" parameterType="user">
 		INSERT INTO user (account, password, name, email)
 		VALUES (#{account},#{password}, #{name}, #{email})
