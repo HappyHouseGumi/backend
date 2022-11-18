@@ -7,17 +7,17 @@ import java.util.List;
 import com.jsg.house.user.model.dto.User;
 
 public interface UserService {
-	List<Object> getUserList() throws Exception;
+	List<Object> getUserList();
 
-	int registUser(User user) throws Exception;
+	int registUser(User user);
 
-	int deleteUser(int id) throws Exception;
+	int deleteUser(int id);
 	
-	int modifyUser(HashMap<String,Object> map) throws Exception;
+	int modifyUser(HashMap<String,Object> map);
 
-	int checkNick(String nickName) throws Exception;
+	int checkNick(String nickName);
 
-	User loginUser(HashMap<String, String> map) throws Exception;
+	int loginUser(HashMap<String, String> map);
 
 	int findUserByEmail(String email) throws Exception;
 	
