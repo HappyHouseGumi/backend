@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.jsg.house.board.model.dto.Board;
 import com.jsg.house.board.model.mapper.BoardMapper;
+import com.jsg.house.util.SizeConstant;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -22,8 +23,17 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Object> listBoard() throws Exception {
-		return mapper.listBoard();
+	public List<Object> listBoard(HashMap<String, Object> map) throws Exception {
+		
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("key", map.get("key") == null ? "" : (String)map.get("key"));
+		param.put("word", map.get("word") == null ? "" : map.get("word"));
+		int pgNo = Integer.parseInt((String)map.get("pgno") == null ? "1" : (String)map.get("pgno"));
+		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+		param.put("start", start);
+		param.put("listsize", SizeConstant.LIST_SIZE);
+		
+		return mapper.listBoard(param);
 	}
 
 	@Override
@@ -45,6 +55,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int deleteBoard(String boardId) throws Exception {
 		return mapper.deleteBoard(boardId);
+	}
+
+	@Override
+	public List<Object> getSidoName() throws Exception {
+		return mapper.getSidoName();
+	}
+
+	@Override
+	public List<Object> getGugunName(String code) throws Exception {
+		return mapper.getGugunName(code);
 	}
 
 	
