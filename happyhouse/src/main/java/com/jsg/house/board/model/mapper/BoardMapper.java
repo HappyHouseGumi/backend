@@ -8,7 +8,7 @@ import com.jsg.house.board.model.dto.Board;
 
 public interface BoardMapper {
 
-	List<Object> listBoard() throws SQLException;
+	List<Object> listBoard(HashMap<String, Object> map) throws SQLException;
 
 	int writeBoard(Board board) throws SQLException;
 
@@ -19,5 +19,9 @@ public interface BoardMapper {
 	int deleteBoard(String boardId) throws SQLException;
 
 	void hitupdate(String boardId) throws SQLException;
+
+	List<Object> getSidoName() throws SQLException;
+
+	List<Object> getGugunName(String code) throws SQLException;
 
 }

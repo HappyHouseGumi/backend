@@ -32,7 +32,7 @@ public class RestBoardController {
 	private static final Logger log = LoggerFactory.getLogger(RestBoardController.class);
 
 	private HttpFlag flag = new HttpFlag();
-	
+
 	private BoardService service;
 
 	@Autowired
@@ -41,12 +41,42 @@ public class RestBoardController {
 		this.service = service;
 	}
 
+	@ApiOperation(value = "Board subject 시도 구군 정보를 불러온다.", notes = "게시판 말머리를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/{gubun}/{code}")
+	public ResponseEntity<?> subjectBoard(@PathVariable(name = "gubun") String gubun, @PathVariable(name = "code") String code) {
+		log.debug("Board Subject : ", gubun, code);
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("gubun", gubun);
+		map.put("code", code);
+		if (map.get("gubun").equals("sido")) {
+			try {
+				List<Object> dongcode = service.getSidoName();
+				flag.setFlag("success");
+				flag.setData(dongcode);
+				return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (map.get("gubun").equals("gugun")) {
+			try {
+				List<Object> dongcode = service.getGugunName(map.get("code"));
+				flag.setFlag("success");
+				flag.setData(dongcode);
+				return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 	@ApiOperation(value = "Board 리스트를 불러온다.", notes = "게시판 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	@GetMapping()
-	public ResponseEntity<?> listBoard() {
+	@PostMapping("/list")
+	public ResponseEntity<?> listBoard(@RequestBody HashMap<String, Object> map) {
 		log.debug("Board List : ");
 		try {
-			List<Object> boardList = service.listBoard();
+			List<Object> boardList = service.listBoard(map);
 			log.debug(boardList.toString());
 			if (boardList == null || boardList.isEmpty()) {
 				flag.setFlag("fail");
