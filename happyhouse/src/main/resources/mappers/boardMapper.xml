@@ -15,12 +15,19 @@
 		<result column="state" property="state"/>
 	</resultMap> -->
 	
+	<sql id="search">
+		<if test="word != null and word != ''">
+			where ${key} like concat('%', #{word}, '%')
+		</if>
+	</sql>
 	
-	<!-- List<Object> listBoard() throws SQLException; -->
-	<select id="listBoard" resultType="board">
+	<!-- List<Object> listBoard(HashMap<String, Object> map) throws SQLException; -->
+	<select id="listBoard" parameterType="map" resultType="board">
 		select id, userId, subject, title, content, regDate, hit
 		from board_view
+		<include refid="search"></include>
 		order by id desc
+		limit #{start}, #{listsize}
 	</select>
 	
 	
@@ -67,5 +74,18 @@
 		set state = -1
 		where id = #{boardId}
 	</delete>
+	
+	<!-- List<Object> getSidoName() throws SQLException; -->
+	<select id="getSidoName" resultType="boardSubject">
+		select distinct id, sidoName
+		from subject_view
+	</select>
+
+	<!-- List<Object> getGugunName(String code) throws SQLException; -->
+	<select id="getGugunName" parameterType="string" resultType="boardSubject">
+		select id, sidoName, gugunName
+		from subject_view
+		where id = #{code}
+	</select>
 	
 </mapper>

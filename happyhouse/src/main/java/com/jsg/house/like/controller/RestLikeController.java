@@ -64,7 +64,6 @@ public class RestLikeController {
 	@PostMapping()
 	public ResponseEntity<?> registLike(@RequestBody Like like) {
 		log.debug("Like regist : ", like);
-		System.out.println(like);
 		try {
 			int checkSum = service.registLike(like);
 			if (checkSum == 0) {
@@ -84,7 +83,6 @@ public class RestLikeController {
 	@DeleteMapping("/{likeid}")
 	public ResponseEntity<?> deleteLike(@PathVariable("likeid") String likeId) {
 		log.debug("Like delete : ", likeId);
-		System.out.println(likeId);
 		try {
 			int checkSum = service.deleteLike(likeId);
 			if (checkSum == 0) {
