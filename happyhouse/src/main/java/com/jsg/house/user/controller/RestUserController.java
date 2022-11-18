@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jsg.house.config.HttpFlag;
+import com.jsg.house.exception.NoDataException;
 import com.jsg.house.user.model.dto.User;
 import com.jsg.house.user.model.service.JwtService;
 import com.jsg.house.user.model.service.UserService;
@@ -35,114 +36,66 @@ public class RestUserController {
 
 	@Autowired
 	private UserService service;
-	
+
 	@Autowired
 	private JwtService jwtService;
-	
+
 	private HttpFlag flag = new HttpFlag();
-	
+
 	private static final Logger loggger = LoggerFactory.getLogger(RestUserController.class);
-	
+
 	@ApiOperation(value = "유저 리스트를 불러온다.", notes = "유저 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping
 	public ResponseEntity<?> getUserList() {
-		try {
-			loggger.info("send : getUserList");
-			List<Object> users = service.getUserList();
-			if (users == null || users.isEmpty()) {
-				flag.setFlag("fail");
-				flag.setData(null);
-			} else {
-				flag.setFlag("success");
-				flag.setData(users);
-			}
-			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	@ApiOperation(value = "유저를 등록한다.", notes = "유저를 등록한다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	@PostMapping()
-	public ResponseEntity<?> registUser(@RequestBody User user) {
-		loggger.info("send : registUser {} " , user);
-		try {
-			int checkSum = service.registUser(user);
-			flag.setData(null);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			flag.setFlag("fail");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		loggger.info("send : getUserList");
+		List<Object> users = service.getUserList();
+		flag.setFlag("success");
+		flag.setData(users);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "유저를 수정한다.", notes = "유저를 수정한다. account가 아닌 userId(index)를 넘겨준다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	@PutMapping("/{userid}")
-	public ResponseEntity<?> modifyUser(@PathVariable(name = "userid") String userid,
-			@RequestBody HashMap<String, Object> map) {
-		int id = Integer.parseInt(userid);
-		loggger.info("send : modifyUser {} " , id);
-		try {
-			for (String key : map.keySet()) {
-				System.out.println(key + " : " + map.get(key));
-			}
-			map.put("id", id);
-			int checkSum = service.modifyUser(map);
-			flag.setData(null);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			flag.setFlag("fail");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@ApiOperation(value = "유저를 등록한다.", notes = "유저를 등록한다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@PostMapping()
+	public ResponseEntity<?> registUser(@RequestBody User user) throws NoDataException {
+		loggger.info("send : registUser {} ", user);
+		service.registUser(user);
+		flag.setFlag("success");
+		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	
+
+	//@PathVariable(name = "userid")
+	@ApiOperation(value = "유저를 수정한다.", notes = "유저를 수정한다. account가 아닌 userId(index)를 넘겨준다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@PutMapping("/{userid}")
+	public ResponseEntity<?> modifyUser(@PathVariable int userid, @RequestBody HashMap<String, Object> map) {
+		loggger.info("send : modifyUser {} ", userid);
+		map.put("id", userid);
+		service.modifyUser(map);
+		flag.setData(null);
+		flag.setFlag("success");
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
+
 	@ApiOperation(value = "유저를 삭제한다.", notes = "유저를 삭제한다. account가 아닌 userId(index)를 넘겨준다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@DeleteMapping("/{userid}")
-	public ResponseEntity<?> deleteUser(@PathVariable(name = "userid") String userid) {
-		try {
-			int id = Integer.parseInt(userid);
-			int checkSum = service.deleteUser(id);
-			flag.setData(null);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			flag.setFlag("fail");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public ResponseEntity<?> deleteUser(@PathVariable int userid) {
+		loggger.info("send : deleteUser {} ", userid);
+		service.deleteUser(userid);
+		flag.setFlag("success");
+		flag.setData(null);
+
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "닉네임 중복 체크를 한다.", notes = "중복 되는 account가 없으면 'success', 있으면 'fail' 문자열을 반환한다.", response = String.class)
 	@GetMapping("/checknick/{nickName}")
 	public ResponseEntity<?> checkNick(@PathVariable String nickName) {
-		loggger.info("send : idCheck {} " , nickName);
+		loggger.info("send : idCheck {} ", nickName);
 		flag.setFlag("fail");
 		flag.setData(null);
-		try {
-			int checkSum = service.checkNick(nickName);
-			if (checkSum == 0) {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		int checkSum = service.checkNick(nickName);
+		if (checkSum == 0) {
+			flag.setFlag("success");
 		}
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
@@ -151,22 +104,13 @@ public class RestUserController {
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUser(@RequestBody HashMap<String, String> map) {
 		List<Object> data = new ArrayList<Object>();
-		flag.setFlag("fail");
-//		flag.setData
-		try {
-			User user = service.loginUser(map);
-			if (user != null) {
-				flag.setFlag("success");
-				int userId = user.getId();
-				String token = jwtService.createToken(userId);
-				map.clear();
-				map.put("access-token", token);
-				data.add(map);
-				flag.setData(data);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		int userId = service.loginUser(map);
+		String token = jwtService.createToken(userId);
+		flag.setFlag("success");
+		map.clear();
+		map.put("access-token", token);
+		data.add(map);
+		flag.setData(data);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
@@ -175,23 +119,19 @@ public class RestUserController {
 	public ResponseEntity<?> logoutUser() {
 		flag.setData(null);
 		flag.setFlag("success");
-		
+
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/jwt")
 	public ResponseEntity<?> jwt(@RequestBody HashMap<String, String> map) {
 		flag.setFlag("fail");
 		flag.setData(null);
-		try {
-			boolean check = jwtService.checkToken(map.get("access-token"));
-			if (check) {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		boolean check = jwtService.checkToken(map.get("access-token"));
+		if (check) {
+			flag.setFlag("success");
 		}
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	//checkToken
+	// checkToken
 }

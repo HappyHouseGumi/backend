@@ -15,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +30,7 @@ import com.jsg.house.user.model.service.UserService;
 
 @RequestMapping("/naver")
 @RestController
+@CrossOrigin
 public class RestOauthController {
 	
 	private HttpFlag flag = new HttpFlag();
@@ -38,30 +41,25 @@ public class RestOauthController {
 	@Autowired
 	private JwtService JwtService;
 	
-	@GetMapping("/auth")
-	public ResponseEntity<?> authNaver(@RequestParam String code, @RequestParam String state) {
-		ResponseEntity<?> response = requestAccessToken(generateAuthCodeRequest(code,state));
+	@PostMapping
+	public ResponseEntity<?> authNaver(@RequestBody HashMap<String,String> tokens) {
+		//ResponseEntity<?> response = requestAccessToken(generateAuthCodeRequest(code,state));
+		
 		List<Object> data = new ArrayList<Object>();
 		HashMap<String, String> map = new HashMap<>();
 		flag.setFlag("success");
 		JSONParser jsonParser = new JSONParser(); 
 		JSONObject jsonObject = null;
-		String accessToken = "";
+		String accessToken = tokens.get("access_token");
 		int userId = 0;
 		try {
-			jsonObject = (JSONObject) jsonParser.parse(response.getBody().toString());
-			accessToken = jsonObject.get("access_token").toString();
+//			jsonObject = (JSONObject) jsonParser.parse(response.getBody().toString());
+//			accessToken = jsonObject.get("access_token").toString();
 			userId = service.findUserByOauth(accessToken);
 			String jwToken = JwtService.createToken(userId);
 			map.put("access-token", jwToken);
 			data.add(map);
 			flag.setData(data);
-		} catch (ParseException e) {
-			flag.setFlag("fail");
-			map.put("msg", "파싱 불가");
-			data.add(map);
-			flag.setData(data);
-			e.printStackTrace();
 		} catch (Exception e) {
 			userId = -1;
 		}
