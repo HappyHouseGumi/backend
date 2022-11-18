@@ -15,9 +15,17 @@ public interface UserMapper {
 	
 	int modifyUser(HashMap<String,Object> map) throws SQLException;
 	
-	int idCheck(String account) throws SQLException;
+	int checkNick(String nickName) throws SQLException;
 
 	User loginUser(HashMap<String, String> map) throws SQLException;
 
 	int findUserByEmail(String email) throws SQLException;
+	
+	int countOauth() throws SQLException;
+
+	int findUserByOauth(String accessToken) throws SQLException;
+
+	void addUserOauth(HashMap<String, Object> oauthMap) throws SQLException;
+
+	void registOauthUser(User user) throws SQLException;
 }

@@ -7,37 +7,44 @@
 	
 	<resultMap type="user" id="userDto" >
 		<result column="id" property="id"/>
-		<result column="account" property="account"/>
-		<result column="password" property="password"/>
-		<result column="name" property="name"/>
 		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="nick_name" property="nickName"/>
 		<result column="reg_date" property="regDate"/>
 		<result column="location" property="location"/>
 		<result column="grade" property="grade"/>
 	</resultMap>
 	
 	<select id="getUserList" resultMap="userDto">
-		SELECT * FROM user;
+		SELECT * FROM user
 	</select>
 	
-	<select id="idCheck" parameterType="string" resultType="int">
+	<select id="checkNick" parameterType="string" resultType="int">
 		SELECT count(id) 
 		FROM user
-		WHERE account = #{account}
+		WHERE nick_name = #{nickName}
 	</select>
 	<select id="loginUser" parameterType="map" resultMap="userDto">
-		SELECT id, account, name, email, reg_date, location, grade
+		SELECT id, email, nick_name, reg_date, location, grade
 		FROM user
-		WHERE account = #{account} AND password = #{password};
+		WHERE email = #{email} AND password = #{password};
 	</select>
 	
 	<select id="findUserByEmail" parameterType="string" resultType="int">
-		Select count(*) from user where email = #{email}
+		Select id from user where email = #{email}
 	</select>
-	
+	<select id="findUserByOauth" parameterType="string" resultType="int">
+		SELECT id, email, nick_name, reg_date, location, grade
+		FROM user
+		WHERE oauth = #{oauth}
+	</select>
 	<insert id="registUser" parameterType="user">
-		INSERT INTO user (account, password, name, email)
-		VALUES (#{account},#{password}, #{name}, #{email})
+		INSERT INTO user (email, password, nick_name)
+		VALUES (#{email},#{password}, #{nickName})
+	</insert>
+	<insert id="registOauthUser" parameterType="user">
+		INSERT INTO user (email, password, nick_name, oauth)
+		VALUES (#{email},#{password}, #{nickName}, #{oauth})
 	</insert>
 	
 	<delete id="deleteUser" parameterType="int">
@@ -50,9 +57,6 @@
 		UPDATE user 
 		SET
 		<trim suffixOverrides=",">
-			<if test="account != null">
-				account = #{account},
-			</if>
 			<if test="password != null">
 				password = #{password},
 			</if>
@@ -60,6 +64,17 @@
 				location = #{location},
 			</if>
 		</trim>
+		WHERE
+			id = #{id}
+	</update>
+	<select id="countOauth" resultType="int">
+		SELECT COUNT(*) FROM user where oauth IS NOT NULL
+	</select>
+	
+	<update id="addUserOauth" parameterType="map">
+		UPDATE user 
+		SET
+			oauth = #{oauth}
 		WHERE
 			id = #{id}
 	</update>
