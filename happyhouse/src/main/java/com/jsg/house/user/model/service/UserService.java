@@ -15,7 +15,17 @@ public interface UserService {
 	
 	int modifyUser(HashMap<String,Object> map) throws Exception;
 
-	int idCheck(String account) throws Exception;
+	int checkNick(String nickName) throws Exception;
 
 	User loginUser(HashMap<String, String> map) throws Exception;
+
+	int findUserByEmail(String email) throws Exception;
+	
+	int countOauth() throws Exception;
+
+	int findUserByOauth(String accessToken) throws Exception;
+
+	void addUserOauth(HashMap<String, Object> OauthMap) throws Exception;
+	
+	void registOauthUser(User user) throws Exception;
 }

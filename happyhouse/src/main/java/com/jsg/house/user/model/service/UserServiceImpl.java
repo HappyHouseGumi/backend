@@ -40,15 +40,44 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int idCheck(String account) throws Exception {
+	public int checkNick(String nickName) throws Exception {
 		// TODO Auto-generated method stub
-		return mapper.idCheck(account);
+		return mapper.checkNick(nickName);
 	}
 
 	@Override
 	public User loginUser(HashMap<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
 		return mapper.loginUser(map);
+	}
+
+	@Override
+	public int findUserByEmail(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.findUserByEmail(email);
+	}
+
+	@Override
+	public int findUserByOauth(String accessToken) throws Exception {
+		return mapper.findUserByOauth(accessToken);
+	}
+
+	@Override
+	public void addUserOauth(HashMap<String, Object> OauthMap) throws Exception {
+		mapper.addUserOauth(OauthMap);
+		
+	}
+
+	@Override
+	public int countOauth() throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.countOauth();
+	}
+
+	@Override
+	public void registOauthUser(User user) throws Exception {
+		mapper.registOauthUser(user);
+		
 	}
 	
 }

@@ -7,34 +7,35 @@ import io.swagger.annotations.ApiModelProperty;
 public class User {
 	@ApiModelProperty(value = "사용자 번호")
 	private int id;
-	@ApiModelProperty(value = "사용자 id")
-	private String account;
-	@ApiModelProperty(value = "사용자 pw")
-	private String password;
-	@ApiModelProperty(value = "사용자 이름")
-	private String name;
 	@ApiModelProperty(value = "사용자 이메일")
 	private String email;
+	@ApiModelProperty(value = "사용자 pw")
+	private String password;
+	@ApiModelProperty(value = "사용자 닉네임")
+	private String nickName;
 	@ApiModelProperty(value = "등록일")
 	private String regDate;
 	@ApiModelProperty(value = "사용자 실주소")
 	private String location;
 	@ApiModelProperty(value = "사용자 등급")
 	private int grade;
+	@ApiModelProperty(value = "사용자 등급")
+	private String oauth;
 	
 	public User() {	}
 
-	public User(int id, String account, String password, String name, String email, String regDate, String location,
-			int grade) {
+	public User(int id, String email, String password, String nickName, String regDate, String location,
+			int grade, String oauth) {
 		super();
 		this.id = id;
-		this.account = account;
+		this.email = email;
 		this.password = password;
-		this.name = name;
+		this.nickName = nickName;
 		this.email = email;
 		this.regDate = regDate;
 		this.location = location;
 		this.grade = grade;
+		this.oauth = oauth;
 	}
 
 	public int getId() {
@@ -45,13 +46,6 @@ public class User {
 		this.id = id;
 	}
 
-	public String getAccount() {
-		return account;
-	}
-
-	public void setAccount(String account) {
-		this.account = account;
-	}
 
 	public String getPassword() {
 		return password;
@@ -61,12 +55,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getEmail() {
@@ -101,10 +95,18 @@ public class User {
 		this.grade = grade;
 	}
 
+	public String getOauth() {
+		return oauth;
+	}
+
+	public void setOauth(String oauth) {
+		this.oauth = oauth;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", account=" + account + ", password=" + password + ", name=" + name + ", email="
-				+ email + ", regDate=" + regDate + ", location=" + location + ", grade=" + grade + "]";
+		return "User [id=" + id + ", password=" + password + ", nickName=" + nickName + ", email="
+				+ email + ", regDate=" + regDate + ", location=" + location + ", grade=" + grade +" ,oauth="+oauth+ "]";
 	}
 	
 	

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +40,14 @@ public class RestUserController {
 	private JwtService jwtService;
 	
 	private HttpFlag flag = new HttpFlag();
-
+	
+	private static final Logger loggger = LoggerFactory.getLogger(RestUserController.class);
+	
 	@ApiOperation(value = "유저 리스트를 불러온다.", notes = "유저 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping
 	public ResponseEntity<?> getUserList() {
 		try {
+			loggger.info("send : getUserList");
 			List<Object> users = service.getUserList();
 			if (users == null || users.isEmpty()) {
 				flag.setFlag("fail");
@@ -62,6 +67,7 @@ public class RestUserController {
 	@ApiOperation(value = "유저를 등록한다.", notes = "유저를 등록한다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping()
 	public ResponseEntity<?> registUser(@RequestBody User user) {
+		loggger.info("send : registUser {} " , user);
 		try {
 			int checkSum = service.registUser(user);
 			flag.setData(null);
@@ -82,8 +88,9 @@ public class RestUserController {
 	@PutMapping("/{userid}")
 	public ResponseEntity<?> modifyUser(@PathVariable(name = "userid") String userid,
 			@RequestBody HashMap<String, Object> map) {
+		int id = Integer.parseInt(userid);
+		loggger.info("send : modifyUser {} " , id);
 		try {
-			int id = Integer.parseInt(userid);
 			for (String key : map.keySet()) {
 				System.out.println(key + " : " + map.get(key));
 			}
@@ -123,13 +130,14 @@ public class RestUserController {
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "account 중복 체크를 한다.", notes = "중복 되는 account가 없으면 'success', 있으면 'fail' 문자열을 반환한다.", response = String.class)
-	@GetMapping("/idcheck/{account}")
-	public ResponseEntity<?> idCheck(@PathVariable(name = "account") String account) {
+	@ApiOperation(value = "닉네임 중복 체크를 한다.", notes = "중복 되는 account가 없으면 'success', 있으면 'fail' 문자열을 반환한다.", response = String.class)
+	@GetMapping("/checknick/{nickName}")
+	public ResponseEntity<?> checkNick(@PathVariable String nickName) {
+		loggger.info("send : idCheck {} " , nickName);
 		flag.setFlag("fail");
 		flag.setData(null);
 		try {
-			int checkSum = service.idCheck(account);
+			int checkSum = service.checkNick(nickName);
 			if (checkSum == 0) {
 				flag.setFlag("success");
 			}
