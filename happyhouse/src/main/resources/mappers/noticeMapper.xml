@@ -4,12 +4,20 @@
 
 <mapper
 	namespace="com.jsg.house.notice.model.mapper.NoticeMapper">
+	
+	<sql id="search">
+		<if test="word != null and word != ''">
+			where title like concat('%', #{word}, '%')
+		</if>
+	</sql>
 
-	<!-- List<Object> listNotice() throws SQLException; -->
-	<select id="listNotice" resultType="notice">
+	<!-- List<Object> listNotice(HashMap<String, Object> map) throws SQLException; -->
+	<select id="listNotice" parameterType="map" resultType="notice">
 		select id, userId, title, content, regDate
 		from notice_view
+		<include refid="search"></include>
 		order by id desc
+		limit #{start}, #{listsize}
 	</select>
 
 	<!-- int writeNotice(Notice notice) throws SQLException; -->

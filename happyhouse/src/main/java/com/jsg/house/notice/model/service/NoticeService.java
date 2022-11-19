@@ -7,14 +7,14 @@ import com.jsg.house.notice.model.dto.Notice;
 
 public interface NoticeService {
 
-	List<Object> listNotice() throws Exception;
+	List<Object> listNotice(HashMap<String, Object> map);
 
-	int writeNotice(Notice notice) throws Exception;
+	void writeNotice(Notice notice);
 
-	List<Object> viewNotice(String noticeId) throws Exception;
+	List<Object> viewNotice(String noticeId);
 
-	int modifyNotice(HashMap<String, Object> map) throws Exception;
+	void modifyNotice(HashMap<String, Object> map);
 
-	int deleteNotice(String noticeId) throws Exception;
+	void deleteNotice(String noticeId);
 	
 }

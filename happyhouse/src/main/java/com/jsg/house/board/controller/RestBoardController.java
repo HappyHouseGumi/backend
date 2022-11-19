@@ -45,30 +45,23 @@ public class RestBoardController {
 
 	@ApiOperation(value = "Board subject 시도 구군 정보를 불러온다.", notes = "게시판 말머리를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping("/{gubun}/{code}")
-	public ResponseEntity<?> subjectBoard(@PathVariable(name = "gubun") String gubun, @PathVariable(name = "code") String code) {
+	public ResponseEntity<?> subjectBoard(@PathVariable(name = "gubun") String gubun,
+			@PathVariable(name = "code") String code) {
 		log.debug("Board Subject : ", gubun, code);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("gubun", gubun);
 		map.put("code", code);
 		if (map.get("gubun").equals("sido")) {
-			try {
-				List<Object> dongcode = service.getSidoName();
-				flag.setFlag("success");
-				flag.setData(dongcode);
-				return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			List<Object> dongcode = service.getSidoName();
+			flag.setFlag("success");
+			flag.setData(dongcode);
+			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 		}
 		if (map.get("gubun").equals("gugun")) {
-			try {
-				List<Object> dongcode = service.getGugunName(map.get("code"));
-				flag.setFlag("success");
-				flag.setData(dongcode);
-				return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			List<Object> dongcode = service.getGugunName(map.get("code"));
+			flag.setFlag("success");
+			flag.setData(dongcode);
+			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -77,38 +70,19 @@ public class RestBoardController {
 	@PostMapping("/list")
 	public ResponseEntity<?> listBoard(@RequestBody HashMap<String, Object> map) {
 		log.debug("Board List : ");
-		try {
-			List<Object> boardList = service.listBoard(map);
-			log.debug(boardList.toString());
-			if (boardList == null || boardList.isEmpty()) {
-				flag.setFlag("fail");
-				flag.setData(null);
-			} else {
-				flag.setFlag("success");
-				flag.setData(boardList);
-			}
-			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		List<Object> boardList = service.listBoard(map);
+		log.debug(boardList.toString());
+		flag.setFlag("success");
+		flag.setData(boardList);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Board write를 불러온다.", notes = "게시판 글 쓰기를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping()
 	public ResponseEntity<?> writeBoard(@RequestBody Board board) {
 		log.debug("Board Write : ", board);
-		try {
-			int checkSum = service.writeBoard(board);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag.setFlag("fail");
-		}
+		service.writeBoard(board);
+		flag.setFlag("success");
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
@@ -117,61 +91,30 @@ public class RestBoardController {
 	@GetMapping("/{boardid}")
 	public ResponseEntity<?> viewBoard(@PathVariable("boardid") String boardId) {
 		log.debug("Board View : ", boardId);
-		try {
-			List<Object> vboard = service.viewBoard(boardId);
-			if (vboard == null || vboard.isEmpty()) {
-				flag.setFlag("fail");
-				flag.setData(null);
-			} else {
-				flag.setFlag("success");
-				flag.setData(vboard);
-			}
-			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		List<Object> vboard = service.viewBoard(boardId);
+		flag.setFlag("success");
+		flag.setData(vboard);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Board modify를 불러온다.", notes = "게시판 글 수정을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PutMapping()
 	public ResponseEntity<?> modifyBoard(@RequestBody HashMap<String, Object> map) {
 		log.debug("Board Modify : ", map);
-		try {
-			int checkSum = service.modifyBoard(map);
-			if (checkSum != 0) {
-				String boardId = map.get("id") + "";
-				List<Object> mboard = service.viewBoard(boardId);
-				if (mboard == null || mboard.isEmpty()) {
-					flag.setFlag("fail");
-					flag.setData(null);
-				} else {
-					flag.setFlag("success");
-					flag.setData(mboard);
-				}
-				return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		service.modifyBoard(map);
+		String boardId = map.get("id") + "";
+		List<Object> mboard = service.viewBoard(boardId);
+		flag.setFlag("success");
+		flag.setData(mboard);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Board delete를 불러온다.", notes = "게시판 글 삭제를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@DeleteMapping("/{boardid}")
 	public ResponseEntity<?> deleteBoard(@PathVariable("boardid") String boardId) {
 		log.debug("Board Delete : ", boardId);
-		try {
-			int checkSum = service.deleteBoard(boardId);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag.setFlag("fail");
-		}
+		service.deleteBoard(boardId);
+		flag.setFlag("success");
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}

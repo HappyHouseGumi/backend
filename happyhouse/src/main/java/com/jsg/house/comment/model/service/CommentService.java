@@ -7,12 +7,12 @@ import com.jsg.house.comment.model.dto.Comment;
 
 public interface CommentService {
 
-	List<Object> listComment(String boardId) throws Exception;
+	List<Object> listComment(String boardId);
 
-	int writeComment(Comment comment) throws Exception;
+	void writeComment(Comment comment);
 	
-	int modifyComment(HashMap<String, Object> map) throws Exception;
+	void modifyComment(HashMap<String, Object> map);
 
-	int deleteComment(String commentId) throws Exception;
+	void deleteComment(String commentId);
 
 }
