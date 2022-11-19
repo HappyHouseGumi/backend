@@ -9,4 +9,7 @@ public interface DongCodeService {
 	List<Object> getSido() throws Exception;
 	List<Object> getGugun(String code) throws Exception;
 	List<Object> getDong(String code) throws Exception;
+	List<Object> clusterSido() throws Exception;
+	List<Object> cluster() throws Exception;
+	List<Object> clusterGugun() throws Exception;
 }

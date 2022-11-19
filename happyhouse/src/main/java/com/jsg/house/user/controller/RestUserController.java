@@ -56,7 +56,7 @@ public class RestUserController {
 
 	@ApiOperation(value = "유저를 등록한다.", notes = "유저를 등록한다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping()
-	public ResponseEntity<?> registUser(@RequestBody User user) throws NoDataException {
+	public ResponseEntity<?> registUser(@RequestBody User user)  {
 		loggger.info("send : registUser {} ", user);
 		service.registUser(user);
 		flag.setFlag("success");

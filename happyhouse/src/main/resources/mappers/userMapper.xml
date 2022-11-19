@@ -65,8 +65,8 @@
 	</delete>
 	
 	<select id="detailUser" parameterType="int" resultMap="userDto">
-		SELECT id, email, password, nick_name, grade
-		FROM user
+		SELECT id, email, password, nick_name, grade, concat(d.sido_name,' ', d.gugun_name) location
+		FROM user u join dongcode d on u.location = d.dong_code
 		WHERE id = #{id}
 	</select>
 	
