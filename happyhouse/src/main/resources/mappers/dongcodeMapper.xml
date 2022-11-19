@@ -29,4 +29,26 @@
 		WHERE left(dong_code,5) = left(#{code},5) AND dong_name is not null
 	</select>
 	
+	<select id="clusterSido" resultType="DongCode">
+		SELECT  d.sido_name sidoName,count(*) count , h.lat, h.lng  
+		FROM houseinfo h 
+		join dongcode d 
+		on h.dong_code = d.dong_code
+		group by left(h.dong_code,2);
+	</select>
+	<select id="clusterGugun" resultType="DongCode">
+		SELECT  d.gugun_name gugunName,count(*) count , h.lat, h.lng  
+		FROM houseinfo h 
+		join dongcode d 
+		on h.dong_code = d.dong_code
+		group by left(h.dong_code,5);
+	</select>
+	
+	<select id="cluster" resultType="DongCode">
+		SELECT d.sido_name sidoName, h.lat, h.lng  
+		FROM houseinfo h 
+		join dongcode d 
+		on h.dong_code = d.dong_code
+		group by left(h.dong_code,2) limit 1000000
+	</select>
 </mapper>

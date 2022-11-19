@@ -32,4 +32,19 @@ public class DongCodeServiceImpl implements DongCodeService {
 		return mapper.getDong(code);
 	}
 
+	@Override
+	public List<Object> clusterSido() throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.clusterSido();
+	}
+	@Override
+	public List<Object> clusterGugun() throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.clusterGugun();
+	}
+	@Override
+	public List<Object> cluster() throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.cluster();
+	}
 }

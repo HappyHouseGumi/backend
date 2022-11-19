@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 @Api("아파트 컨트롤러 API V1")
 @RequestMapping("/apt")
 @RestController
+@CrossOrigin
 public class RestAptController {
 	
 	@Autowired
@@ -84,6 +86,54 @@ public class RestAptController {
 			List<Object> aptlist = infoService.getAptList(code);
 			flag.setFlag("success");
 			flag.setData(aptlist);
+			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK); 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ApiOperation(value = "클러스터 시도 정보를 불러온다.", notes = "'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/cluster/sido")
+	public ResponseEntity<?> getAptList() {
+		flag.setFlag("fail");
+		flag.setData(null);
+		try {
+			List<Object> sidolist = dongService.clusterSido();
+			flag.setFlag("success");
+			flag.setData(sidolist);
+			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK); 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	@GetMapping("/cluster/gugun")
+	public ResponseEntity<?> getGugunList() {
+		flag.setFlag("fail");
+		flag.setData(null);
+		try {
+			List<Object> gugunlist = dongService.clusterGugun();
+			flag.setFlag("success");
+			flag.setData(gugunlist);
+			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK); 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	@ApiOperation(value = "클러스터 정보를 불러온다.", notes = "'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/cluster")
+	public ResponseEntity<?> getInfoList() {
+		flag.setFlag("fail");
+		flag.setData(null);
+		try {
+			List<Object> sidolist = dongService.cluster();
+			flag.setFlag("success");
+			flag.setData(sidolist);
 			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK); 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

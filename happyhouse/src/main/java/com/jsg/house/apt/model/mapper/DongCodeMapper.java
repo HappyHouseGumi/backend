@@ -9,4 +9,7 @@ public interface DongCodeMapper {
 	List<Object> getSido() throws SQLException;
 	List<Object> getGugun(String code) throws SQLException;
 	List<Object> getDong(String code) throws SQLException;
+	List<Object> clusterSido() throws SQLException;
+	List<Object> clusterGugun() throws SQLException;
+	List<Object> cluster() throws SQLException;
 }
