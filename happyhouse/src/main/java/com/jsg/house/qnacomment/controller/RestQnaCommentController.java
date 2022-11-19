@@ -48,7 +48,6 @@ public class RestQnaCommentController {
 	@ApiOperation(value = "댓글 리스트를 불러온다.", notes = "댓글 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping("/{qnaId}")
 	public ResponseEntity<?> listQnAComment(@PathVariable int qnaId) {
-		System.out.println("ddddddddd");
 		log.debug("QnA Comment 불러오기.");
 		try {
 			List<Object> comment = service.listQnaComment(qnaId);
