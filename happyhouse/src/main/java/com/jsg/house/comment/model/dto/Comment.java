@@ -10,8 +10,10 @@ public class Comment {
 	private int id;
 	@ApiModelProperty(value = "글번호")
 	private int boardId;
-	@ApiModelProperty(value = "작성자번호")
+	@ApiModelProperty(value = "작성자 아이디")
 	private int userId;
+	@ApiModelProperty(value = "작성자 닉네임")
+	private String nickName;
 	@ApiModelProperty(value = "댓글내용")
 	private String content;
 	@ApiModelProperty(value = "작성일")
@@ -22,16 +24,17 @@ public class Comment {
 	public Comment() {
 		super();
 	}
-	public Comment(int id, int boardId, int userId, String content, String regDate, int state) {
+	public Comment(int id, int boardId, int userId, String nickName, String content, String regDate, int state) {
 		super();
 		this.id = id;
 		this.boardId = boardId;
 		this.userId = userId;
+		this.nickName = nickName;
 		this.content = content;
 		this.regDate = regDate;
 		this.state = state;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -49,6 +52,12 @@ public class Comment {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	public String getContent() {
 		return content;
@@ -71,8 +80,8 @@ public class Comment {
 	
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", boardId=" + boardId + ", userId=" + userId + ", content=" + content
-				+ ", regDate=" + regDate + ", state=" + state + "]";
+		return "Comment [id=" + id + ", boardId=" + boardId + ", userId=" + userId + ", nickName=" + nickName
+				+ ", content=" + content + ", regDate=" + regDate + ", state=" + state + "]";
 	}
-
+	
 }
