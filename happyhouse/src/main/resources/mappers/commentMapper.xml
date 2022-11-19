@@ -8,15 +8,17 @@
 		<result column="id" property="id" />
 		<result column="board_id" property="boardId" />
 		<result column="user_id" property="userId" />
+		<result column="nick_name" property="nickName" />
 		<result column="content" property="content" />
 		<result column="reg_date" property="regDate" />
 		<result column="state" property="state" />
 	</resultMap> -->
 	
-	<!-- List<Object> listComment() throws SQLException; -->
-	<select id="listComment" resultType="comment">
-		select id, boardId, userId, content, regDate
+	<!-- List<Object> listComment(String boardId) throws SQLException; -->
+	<select id="listComment" parameterType="string" resultType="comment">
+		select id, boardId, userId, nickName, content, regDate
 		from comment_view
+		where boardId = #{boardId}
 		order by id desc
 	</select>
 

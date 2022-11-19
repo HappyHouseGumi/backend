@@ -7,7 +7,7 @@ import com.jsg.house.comment.model.dto.Comment;
 
 public interface CommentService {
 
-	List<Object> listComment() throws Exception;
+	List<Object> listComment(String boardId) throws Exception;
 
 	int writeComment(Comment comment) throws Exception;
 	

@@ -9,7 +9,9 @@ public class Board {
 	@ApiModelProperty(value = "글번호")
 	private int id;
 	@ApiModelProperty(value = "작성자 아이디")
-	private int userID;
+	private int userId;
+	@ApiModelProperty(value = "작성자 닉네임")
+	private String nickName;
 	@ApiModelProperty(value = "글분류")
 	private String subject;
 	@ApiModelProperty(value = "글제목")
@@ -26,10 +28,12 @@ public class Board {
 	public Board() {
 		super();
 	}
-	public Board(int id, int userID, String subject, String title, String content, String regDate, int hit, int state) {
+	public Board(int id, int userId, String nickName, String subject, String title, String content, String regDate,
+			int hit, int state) {
 		super();
 		this.id = id;
-		this.userID = userID;
+		this.userId = userId;
+		this.nickName = nickName;
 		this.subject = subject;
 		this.title = title;
 		this.content = content;
@@ -44,11 +48,17 @@ public class Board {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUserID() {
-		return userID;
+	public int getUserId() {
+		return userId;
 	}
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	public String getSubject() {
 		return subject;
@@ -89,8 +99,8 @@ public class Board {
 	
 	@Override
 	public String toString() {
-		return "Board [id=" + id + ", userID=" + userID + ", subject=" + subject + ", title=" + title + ", content="
-				+ content + ", regDate=" + regDate + ", hit=" + hit + ", state=" + state + "]";
+		return "Board [id=" + id + ", userId=" + userId + ", nickName=" + nickName + ", subject=" + subject + ", title="
+				+ title + ", content=" + content + ", regDate=" + regDate + ", hit=" + hit + ", state=" + state + "]";
 	}
 	
 }

@@ -8,7 +8,7 @@ import com.jsg.house.comment.model.dto.Comment;
 
 public interface CommentMapper {
 
-	List<Object> listComment() throws SQLException;
+	List<Object> listComment(String boardId) throws SQLException;
 
 	int writeComment(Comment comment) throws SQLException;
 

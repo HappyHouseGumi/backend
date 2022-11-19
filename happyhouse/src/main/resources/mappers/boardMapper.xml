@@ -6,7 +6,8 @@
 	
 	<!-- <resultMap type="board" id="BoardDto">
 		<result column="id" property="id"/>
-		<result column="user_id" property="userID"/>
+		<result column="user_id" property="userId"/>
+		<result column="nick_name" property="nickName"/>
 		<result column="subject" property="subject"/>
 		<result column="title" property="title"/>
 		<result column="content" property="content"/>
@@ -23,7 +24,7 @@
 	
 	<!-- List<Object> listBoard(HashMap<String, Object> map) throws SQLException; -->
 	<select id="listBoard" parameterType="map" resultType="board">
-		select id, userId, subject, title, content, regDate, hit
+		select id, userId, nickName, subject, title, content, regDate, hit
 		from board_view
 		<include refid="search"></include>
 		order by id desc
@@ -34,7 +35,7 @@
 	<!-- int writeBoard(Board board) throws SQLException; -->
 	<insert id="writeBoard" parameterType="board">
 		insert into board (user_id, subject, title, content)
-		values (#{userID}, #{subject}, #{title}, #{content})
+		values (#{userId}, #{subject}, #{title}, #{content})
 	</insert>
 	
 	<!-- void hitupdate(String boardId) throws SQLException; -->
@@ -46,7 +47,7 @@
 	
 	<!-- List<Object> viewBoard(String boardId) throws SQLException; -->
 	<select id="viewBoard" parameterType="string" resultType="board">
-		select id, userId, subject, title, content, regDate, hit
+		select id, userId, nickName, subject, title, content, regDate, hit
 		from board_view
 		where id = #{boardId}
 	</select>

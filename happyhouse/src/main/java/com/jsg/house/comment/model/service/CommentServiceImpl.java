@@ -20,8 +20,8 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Object> listComment() throws Exception {
-		return mapper.listComment();
+	public List<Object> listComment(String boardId) throws Exception {
+		return mapper.listComment(boardId);
 	}
 
 	@Override

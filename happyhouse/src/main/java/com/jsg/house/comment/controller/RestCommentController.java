@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import io.swagger.annotations.ApiOperation;
 @Api("Comment(댓글) 컨트롤러 API V1") // http://localhost/happy/swagger-ui/index.html
 @RestController
 @RequestMapping("/comment")
+@CrossOrigin
 public class RestCommentController {
 
 	private static final Logger log = LoggerFactory.getLogger(RestBoardController.class);
@@ -43,11 +45,11 @@ public class RestCommentController {
 	}
 
 	@ApiOperation(value = "댓글 리스트를 불러온다.", notes = "댓글 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	@GetMapping()
-	public ResponseEntity<?> listComment() {
+	@GetMapping("/{boardId}")
+	public ResponseEntity<?> listComment(@PathVariable("boardId") String boardId) {
 		log.debug("Comment List 불러오기.");
 		try {
-			List<Object> commentList = service.listComment();
+			List<Object> commentList = service.listComment(boardId);
 			if (commentList == null || commentList.isEmpty()) {
 				flag.setFlag("fail");
 				flag.setData(null);
