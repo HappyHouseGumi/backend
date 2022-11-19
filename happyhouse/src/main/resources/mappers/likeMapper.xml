@@ -3,11 +3,20 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jsg.house.like.model.mapper.LikeMapper">
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			where ${key} like concat('%', #{word}, '%')
+		</if>
+	</sql>
 	
-	<!-- List<Object> listLike() throws SQLException; -->
-	<select id="listLike" resultType="likeBoard">
+	<!-- List<Object> listLike(HashMap<String, Object> map) throws SQLException; -->
+	<select id="listLike" parameterType="map" resultType="likeBoard">
 		select id, boardId, userId, subject, title
 		from like_view
+		<include refid="search"></include>
+		order by id desc
+		limit #{start}, #{listsize}
 	</select>
 
 	<!-- int registLike(Like like) throws SQLException; -->

@@ -48,79 +48,41 @@ public class RestCommentController {
 	@GetMapping("/{boardId}")
 	public ResponseEntity<?> listComment(@PathVariable("boardId") String boardId) {
 		log.debug("Comment List 불러오기.");
-		try {
-			List<Object> commentList = service.listComment(boardId);
-			if (commentList == null || commentList.isEmpty()) {
-				flag.setFlag("fail");
-				flag.setData(null);
-			} else {
-				log.debug(commentList.toString());
-				flag.setFlag("success");
-				flag.setData(commentList);
-			}
-			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		List<Object> commentList = service.listComment(boardId);
+		log.debug(commentList.toString());
+		flag.setFlag("success");
+		flag.setData(commentList);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "댓글 작성을 불러온다.", notes = "댓글 작성을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping()
 	public ResponseEntity<?> writeComment(@RequestBody Comment comment) {
 		log.debug("Comment 작성하기 : ", comment);
-		try {
-			int checkSum = service.writeComment(comment);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag.setFlag("fail");
-		}
+		service.writeComment(comment);
+		flag.setFlag("success");
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	
+
 //	@ApiOperation(value = "댓글 상세 보기를 불러온다.", notes = "댓글 상세 보기를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	
+
 	@ApiOperation(value = "댓글 수정을 불러온다.", notes = "댓글 수정을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PutMapping()
 	public ResponseEntity<?> modifyComment(@RequestBody HashMap<String, Object> map) {
 		log.debug("Comment 수정하기 : ", map);
-		try {
-			int checkSum = service.modifyComment(map);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag.setFlag("fail");
-		}
+		service.modifyComment(map);
+		flag.setFlag("success");
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "댓글 삭제를 불러온다.", notes = "댓글 삭제를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@DeleteMapping("/{commentid}")
 	public ResponseEntity<?> deleteComment(@PathVariable("commentid") String commentId) {
 		log.debug("Comment 삭제하기 : ", commentId);
-		try {
-			int checkSum = service.deleteComment(commentId);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag.setFlag("fail");
-		}
+		service.deleteComment(commentId);
+		flag.setFlag("success");
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}

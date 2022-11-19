@@ -18,7 +18,7 @@ public interface BoardMapper {
 
 	int deleteBoard(String boardId) throws SQLException;
 
-	void hitupdate(String boardId) throws SQLException;
+	int hitupdate(String boardId) throws SQLException;
 
 	List<Object> getSidoName() throws SQLException;
 

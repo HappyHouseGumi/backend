@@ -1,12 +1,18 @@
 package com.jsg.house.like.model.service;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jsg.house.exception.NoDataException;
+import com.jsg.house.exception.NotChangeDataException;
 import com.jsg.house.like.model.dto.Like;
 import com.jsg.house.like.model.mapper.LikeMapper;
+import com.jsg.house.util.SizeConstant;
 
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -19,18 +25,58 @@ public class LikeServiceImpl implements LikeService {
 	}
 
 	@Override
-	public List<Object> listLike() throws Exception {
-		return mapper.listLike();
+	public List<Object> listLike(HashMap<String, Object> map) {
+
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("key", map.get("key") == null ? "" : (String) map.get("key"));
+		param.put("word", map.get("word") == null ? "" : map.get("word"));
+		int pgNo = Integer.parseInt((String) map.get("pgno") == null ? "1" : (String) map.get("pgno"));
+		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+		param.put("start", start);
+		param.put("listsize", SizeConstant.LIST_SIZE);
+
+		List<Object> likeList = null;
+
+		try {
+			likeList = mapper.listLike(param);
+			if (likeList == null || likeList.isEmpty()) {
+				throw new NoDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NoDataException();
+		}
+
+		return likeList;
 	}
 
 	@Override
-	public int registLike(Like like) throws Exception {
-		return mapper.registLike(like);
+	public void registLike(Like like) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.registLike(like);
+			if (checkSum != 1) {
+				throw new NotChangeDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NotChangeDataException();
+
+		}
 	}
 
 	@Override
-	public int deleteLike(String likeId) throws Exception {
-		return mapper.deleteLike(likeId);
+	public void deleteLike(String likeId) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.deleteLike(likeId);
+			if (checkSum != 1) {
+				throw new NotChangeDataException();
+			}
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			throw new NotChangeDataException();
+		}
 	}
 
 }

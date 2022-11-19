@@ -8,7 +8,7 @@ import com.jsg.house.notice.model.dto.Notice;
 
 public interface NoticeMapper {
 
-	List<Object> listNotice() throws SQLException;
+	List<Object> listNotice(HashMap<String, Object> map) throws SQLException;
 
 	int writeNotice(Notice notice) throws SQLException;
 

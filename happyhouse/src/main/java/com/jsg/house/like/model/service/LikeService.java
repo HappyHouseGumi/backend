@@ -1,15 +1,16 @@
 package com.jsg.house.like.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.jsg.house.like.model.dto.Like;
 
 public interface LikeService {
 
-	List<Object> listLike() throws Exception;
+	List<Object> listLike(HashMap<String, Object> map);
 
-	int registLike(Like like) throws Exception;
+	void registLike(Like like);
 
-	int deleteLike(String likeId) throws Exception;
+	void deleteLike(String likeId);
 
 }

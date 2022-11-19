@@ -38,7 +38,7 @@
 		values (#{userId}, #{subject}, #{title}, #{content})
 	</insert>
 	
-	<!-- void hitupdate(String boardId) throws SQLException; -->
+	<!-- int hitupdate(String boardId) throws SQLException; -->
 	<update id="hitupdate" parameterType="string">
 		update board
 		set hit = hit + 1
