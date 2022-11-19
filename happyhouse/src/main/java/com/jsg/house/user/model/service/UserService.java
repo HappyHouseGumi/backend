@@ -13,13 +13,17 @@ public interface UserService {
 
 	int deleteUser(int id);
 	
+	int addAdmin(int id);
+	
 	int modifyUser(HashMap<String,Object> map);
 
 	int checkNick(String nickName);
 
 	int loginUser(HashMap<String, String> map);
-
-	int findUserByEmail(String email) throws Exception;
+	
+	User detailUser(int id);
+	
+	int findUserByEmail(String email);
 	
 	int countOauth() throws Exception;
 
@@ -28,4 +32,6 @@ public interface UserService {
 	void addUserOauth(HashMap<String, Object> OauthMap) throws Exception;
 	
 	void registOauthUser(User user) throws Exception;
+
+	int deleteForceUser(int userid);
 }

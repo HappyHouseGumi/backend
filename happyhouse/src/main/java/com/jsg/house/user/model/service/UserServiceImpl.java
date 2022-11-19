@@ -61,7 +61,35 @@ public class UserServiceImpl implements UserService {
 		}
 		return 1;
 	}
+	
+	@Override
+	public int addAdmin(int id) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.addAdmin(id);
+			if(checkSum != 1) {
+				throw new NotChangeDataException();
+			}
+		} catch (SQLException e) {
+			throw new NotChangeDataException();
+		}
+		return 1;
+	}
 
+	
+	@Override
+	public int deleteForceUser(int id) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.deleteForceUser(id);
+			if(checkSum != 1) {
+				throw new NotChangeDataException();
+			}
+		} catch (SQLException e) {
+			throw new NotChangeDataException();
+		}
+		return 1;
+	}
 	@Override
 	public int modifyUser(HashMap<String, Object> map){
 		int checkSum = 0;
@@ -81,6 +109,9 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		int checkSum = 0;
 		try {
+			if(nickName.length()>6) {
+				return 1;
+			}
 			checkSum = mapper.checkNick(nickName);
 			if(checkSum == 1) {
 				return 1; 
@@ -108,9 +139,30 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int findUserByEmail(String email) throws Exception {
-		// TODO Auto-generated method stub
-		return mapper.findUserByEmail(email);
+	public User detailUser(int id) {
+		User user = null;
+		try {
+			user = mapper.detailUser(id);
+			if(user == null) {
+				throw new NoDataException();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new NoDataException();
+		}
+		return user;
+	}
+	
+	@Override
+	public int findUserByEmail(String email) {
+		int id = 0;
+		try {
+			id = mapper.findUserByEmail(email);
+		} catch (Exception e) {
+			return 0;
+		}
+		return id;
 	}
 
 	@Override
@@ -135,5 +187,8 @@ public class UserServiceImpl implements UserService {
 		mapper.registOauthUser(user);
 		
 	}
+
+	
+	
 	
 }

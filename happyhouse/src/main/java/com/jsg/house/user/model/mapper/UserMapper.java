@@ -13,12 +13,16 @@ public interface UserMapper {
 
 	int deleteUser(int id) throws SQLException;
 	
+	int addAdmin(int id) throws SQLException;
+	
 	int modifyUser(HashMap<String,Object> map) throws SQLException;
 	
 	int checkNick(String nickName) throws SQLException;
 
 	User loginUser(HashMap<String, String> map) throws SQLException;
-
+	
+	User detailUser(int id) throws SQLException;
+	
 	int findUserByEmail(String email) throws SQLException;
 	
 	int countOauth() throws SQLException;
@@ -28,4 +32,6 @@ public interface UserMapper {
 	void addUserOauth(HashMap<String, Object> oauthMap) throws SQLException;
 
 	void registOauthUser(User user) throws SQLException;
+
+	int deleteForceUser(int id) throws SQLException;
 }

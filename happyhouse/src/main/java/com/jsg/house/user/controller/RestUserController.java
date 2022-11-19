@@ -65,7 +65,7 @@ public class RestUserController {
 	}
 
 	//@PathVariable(name = "userid")
-	@ApiOperation(value = "유저를 수정한다.", notes = "유저를 수정한다. account가 아닌 userId(index)를 넘겨준다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@ApiOperation(value = "유저를 수정한다.", notes = "유저를 수정한다. account가 아닌 userId(index)를 넘겨준다.\n { nickName : String, password : String, location : String }\n  'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PutMapping("/{userid}")
 	public ResponseEntity<?> modifyUser(@PathVariable int userid, @RequestBody HashMap<String, Object> map) {
 		loggger.info("send : modifyUser {} ", userid);
@@ -75,7 +75,29 @@ public class RestUserController {
 		flag.setFlag("success");
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "(개발자용) 유저를 완전히 삭제한다.", notes = "유저를 삭제한다. account가 아닌 userId(index)를 넘겨준다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/force/{userid}")
+	public ResponseEntity<?> deleteForceUser(@PathVariable int userid) {
+		loggger.info("send : deleteUser {} ", userid);
+		service.deleteForceUser(userid);
+		flag.setFlag("success");
+		flag.setData(null);
 
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "(개발자용) 유저를 운영자로 지정한다.", notes = "account가 아닌 userId(index)를 넘겨준다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/force/{id}")
+	public ResponseEntity<?> addAdmin(@PathVariable int id) {
+		loggger.info("send : addAdmin {} ", id);
+		service.addAdmin(id);
+		flag.setFlag("success");
+		flag.setData(null);
+
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "유저를 삭제한다.", notes = "유저를 삭제한다. account가 아닌 userId(index)를 넘겨준다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@DeleteMapping("/{userid}")
 	public ResponseEntity<?> deleteUser(@PathVariable int userid) {
@@ -114,12 +136,15 @@ public class RestUserController {
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "로그아웃을 한다.", notes = "무조건 'success' 반환", response = String.class)
-	@GetMapping("/logout")
-	public ResponseEntity<?> logoutUser() {
-		flag.setData(null);
+	@ApiOperation(value = "유저 상세 정보를 찾는다.", notes = "{id : int}만 전달한다. \n 성공하면 'success', 실패하면 'fail' 문자열을 반환한다.", response = String.class)
+	@GetMapping("/detail/{id}")
+	public ResponseEntity<?> detailUser(@PathVariable int id) {
+		List<Object> data = new ArrayList<Object>();
 		flag.setFlag("success");
-
+		User user = service.detailUser(id);
+		data.add(user);
+		flag.setData(data);
+		
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 

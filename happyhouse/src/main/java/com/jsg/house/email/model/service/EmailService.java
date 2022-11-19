@@ -1,5 +1,5 @@
 package com.jsg.house.email.model.service;
 
 public interface EmailService {
-	String sendCode(String to) throws Exception;
+	String sendCode(String to);
 }

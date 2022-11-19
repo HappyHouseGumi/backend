@@ -67,15 +67,18 @@ public class EmailServiceImpl implements EmailService {
         return key.toString();
     }
     @Override
-    public String sendCode(String to)throws Exception {
+    public String sendCode(String to) {
         // TODO Auto-generated method stub
-        MimeMessage message = createMessage(to);
         try{//예외처리
+        	MimeMessage message = createMessage(to);
             emailSender.send(message);
         }catch(MailException es){
             es.printStackTrace();
             throw new IllegalArgumentException();
-        }
+        } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return ePw;
     }
 }
