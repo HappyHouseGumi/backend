@@ -47,16 +47,36 @@
 		VALUES (#{email},#{password}, #{nickName}, #{oauth})
 	</insert>
 	
-	<delete id="deleteUser" parameterType="int">
+	<update id="deleteUser" parameterType="int">
 		UPDATE user 
 		SET grade = -1 
 		WHERE id = #{id}
+	</update>
+	
+	<update id="addAdmin" parameterType="int">
+		UPDATE user 
+		SET grade = 1 
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteForceUser" parameterType="int">
+		DELETE FROM user
+		WHERE id = #{id}
 	</delete>
+	
+	<select id="detailUser" parameterType="int" resultMap="userDto">
+		SELECT id, email, password, nick_name, grade
+		FROM user
+		WHERE id = #{id}
+	</select>
 	
 	<update id="modifyUser" parameterType="map">
 		UPDATE user 
 		SET
 		<trim suffixOverrides=",">
+			<if test="nickName != null">
+				nick_name = #{nickName},
+			</if>
 			<if test="password != null">
 				password = #{password},
 			</if>

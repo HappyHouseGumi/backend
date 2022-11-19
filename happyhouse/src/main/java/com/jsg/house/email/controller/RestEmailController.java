@@ -39,23 +39,17 @@ public class RestEmailController {
 	public ResponseEntity<?> authEmail(@RequestBody HashMap<String,String> map) {
 		
 		List<Object> nono = new ArrayList<>();
-		
-		try {
-			flag.setFlag("success");
-			int checkSum = userService.findUserByEmail(map.get("email"));
-			if(checkSum != 0) {
-				throw new Exception();
-			}
+		int checkSum = userService.findUserByEmail(map.get("email"));
+		if(checkSum == 0) {
 			String code = service.sendCode(map.get("email"));
+			flag.setFlag("success");
 			map.clear();
 			map.put("code", code);
 			nono.add(map);
 			flag.setData(nono);
-			
-		} catch (Exception e) {
+		} else {
 			flag.setFlag("fail");
 			flag.setData(null);
-			e.printStackTrace();
 		}
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
