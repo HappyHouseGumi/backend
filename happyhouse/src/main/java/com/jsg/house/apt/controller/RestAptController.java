@@ -93,6 +93,27 @@ public class RestAptController {
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	@GetMapping("/lists/{sido}/{gugun}")
+	public ResponseEntity<?> getsidogugunAptList(@PathVariable(name = "sido") String sido, @PathVariable(name = "gugun") String gugun) {
+		flag.setFlag("fail");
+		flag.setData(null);
+		try {
+			HashMap<String,String> map = new HashMap<String, String>();
+			map.put("sido", sido);
+			if(sido.equals("세종특별자치시")) {
+				map.put("gugun", "세종특별자치시");
+			} else 
+			map.put("gugun", gugun);
+			List<Object> aptlist = infoService.getsidogugunAptList(map);
+			flag.setFlag("success");
+			flag.setData(aptlist);
+			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK); 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
 	@ApiOperation(value = "클러스터 시도 정보를 불러온다.", notes = "'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping("/cluster/sido")

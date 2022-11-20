@@ -30,6 +30,11 @@
 		SELECT apt_code, build_year, road_name, apartment_name, lat, lng  FROM houseinfo
 		WHERE dong_code = #{code}
 	</select>
+	<select id="getsidogugunAptList" parameterType="string" resultMap="AptInfoDto">
+		SELECT apt_code, build_year, road_name, apartment_name, lat, lng  FROM houseinfo h
+		join dongcode d on h.dong_code = d.dong_code
+		WHERE d.sido_name = #{sido} and d.gugun_name = #{gugun};
+	</select>
 	
 
 	

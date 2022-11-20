@@ -72,6 +72,7 @@ public class RestQnaCommentController {
 		log.debug("Comment 작성하기 : ", comment);
 		List<Object> comments = new ArrayList<Object>();
 		try {
+			System.out.println(comment);
 			int checkSum = service.writeQnaComment(comment);
 			comments = service.listQnaComment(comment.getQnaId());
 			if (checkSum == 0) {

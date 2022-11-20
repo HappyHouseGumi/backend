@@ -55,7 +55,13 @@ public class RestOauthController {
 		try {
 //			jsonObject = (JSONObject) jsonParser.parse(response.getBody().toString());
 //			accessToken = jsonObject.get("access_token").toString();
+			System.out.println(accessToken);
 			userId = service.findUserByOauth(accessToken);
+			System.out.println("1");
+			
+			if(userId == 0) {
+				throw new Exception();
+			}
 			String jwToken = JwtService.createToken(userId);
 			map.put("access-token", jwToken);
 			data.add(map);
@@ -71,9 +77,9 @@ public class RestOauthController {
 				jsonObject = (JSONObject) jsonParser.parse(jsonObject.get("response").toString());
 				email = jsonObject.get("email").toString();
 				userId = service.findUserByEmail(email);
-				System.out.println(email);
-				System.out.println(userId);
-				//내려오면 유저가 있다는 뜻임 
+				if(userId == 0) {
+					throw new Exception();
+				}
 				HashMap<String, Object> OauthMap = new HashMap<String, Object>();
 				OauthMap.put("id", userId);
 				OauthMap.put("oauth", accessToken);
