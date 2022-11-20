@@ -75,11 +75,11 @@ public class RestNoticeController {
 	}
 
 	@ApiOperation(value = "Notice modify를 불러온다.", notes = "공지사항 글 수정을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	@PutMapping()
-	public ResponseEntity<?> modifyNotice(@RequestBody HashMap<String, Object> map) {
+	@PutMapping("/{noticeid}")
+	public ResponseEntity<?> modifyNotice(@PathVariable("noticeid") String noticeId, @RequestBody HashMap<String, Object> map) {
 		log.debug("Notice Modify : ", map);
+		map.put("id", noticeId);
 		service.modifyNotice(map);
-		String noticeId = map.get("id") + "";
 		List<Object> mnotice = service.viewNotice(noticeId);
 		flag.setFlag("success");
 		flag.setData(mnotice);

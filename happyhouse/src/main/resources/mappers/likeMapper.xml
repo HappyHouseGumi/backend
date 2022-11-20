@@ -12,7 +12,7 @@
 	
 	<!-- List<Object> listLike(HashMap<String, Object> map) throws SQLException; -->
 	<select id="listLike" parameterType="map" resultType="likeBoard">
-		select id, boardId, userId, subject, title
+		select id, boardId, userId, nickName, subject, title
 		from like_view
 		<include refid="search"></include>
 		order by id desc

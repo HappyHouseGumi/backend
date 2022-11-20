@@ -9,7 +9,7 @@ public class Notice {
 	@ApiModelProperty(value = "글번호")
 	private int id;
 	@ApiModelProperty(value = "작성자 아이디")
-	private int userID;
+	private int userId;
 	@ApiModelProperty(value = "글제목")
 	private String title;
 	@ApiModelProperty(value = "글내용")
@@ -18,31 +18,31 @@ public class Notice {
 	private String regDate;
 	@ApiModelProperty(value = "글 상태 (삭제 여부")
 	private int state;
-	
+
 	public Notice() {
 		super();
 	}
-	public Notice(int id, int userID, String title, String content, String regDate, int state) {
+	public Notice(int id, int userId, String title, String content, String regDate, int state) {
 		super();
 		this.id = id;
-		this.userID = userID;
+		this.userId = userId;
 		this.title = title;
 		this.content = content;
 		this.regDate = regDate;
 		this.state = state;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUserID() {
-		return userID;
+	public int getUserId() {
+		return userId;
 	}
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public String getTitle() {
 		return title;
@@ -71,7 +71,7 @@ public class Notice {
 	
 	@Override
 	public String toString() {
-		return "Notice [id=" + id + ", userID=" + userID + ", title=" + title + ", content=" + content + ", regDate="
+		return "Notice [id=" + id + ", userId=" + userId + ", title=" + title + ", content=" + content + ", regDate="
 				+ regDate + ", state=" + state + "]";
 	}
 	

@@ -11,23 +11,26 @@ public class LikeBoard {
 	private int boardId;
 	@ApiModelProperty(value = "사용자번호")
 	private int userId;
+	@ApiModelProperty(value = "글 작성자 닉네임")
+	private String nickName;
 	@ApiModelProperty(value = "글분류")
 	private String subject;
 	@ApiModelProperty(value = "글제목")
 	private String title;
 	
-	
 	public LikeBoard() {
 		super();
 	}
-	public LikeBoard(int id, int boardId, int userId, String subject, String title) {
+	public LikeBoard(int id, int boardId, int userId, String nickName, String subject, String title) {
+		super();
 		this.id = id;
 		this.boardId = boardId;
 		this.userId = userId;
+		this.nickName = nickName;
 		this.subject = subject;
 		this.title = title;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -46,6 +49,12 @@ public class LikeBoard {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 	public String getSubject() {
 		return subject;
 	}
@@ -61,8 +70,8 @@ public class LikeBoard {
 	
 	@Override
 	public String toString() {
-		return "LikeBoard [id=" + id + ", boardId=" + boardId + ", userId=" + userId + ", subject=" + subject
-				+ ", title=" + title + "]";
+		return "LikeBoard [id=" + id + ", boardId=" + boardId + ", userId=" + userId + ", nickName=" + nickName
+				+ ", subject=" + subject + ", title=" + title + "]";
 	}
 	
 }

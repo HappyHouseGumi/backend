@@ -98,11 +98,11 @@ public class RestBoardController {
 	}
 
 	@ApiOperation(value = "Board modify를 불러온다.", notes = "게시판 글 수정을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	@PutMapping()
-	public ResponseEntity<?> modifyBoard(@RequestBody HashMap<String, Object> map) {
+	@PutMapping("/{boardid}")
+	public ResponseEntity<?> modifyBoard(@PathVariable("boardid") String boardId, @RequestBody HashMap<String, Object> map) {
 		log.debug("Board Modify : ", map);
+		map.put("id", boardId);
 		service.modifyBoard(map);
-		String boardId = map.get("id") + "";
 		List<Object> mboard = service.viewBoard(boardId);
 		flag.setFlag("success");
 		flag.setData(mboard);

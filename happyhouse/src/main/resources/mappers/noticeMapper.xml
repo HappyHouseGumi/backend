@@ -24,7 +24,7 @@
 	<insert id="writeNotice" parameterType="notice">
 		insert into notice
 		(user_id, title, content)
-		values (#{userID}, #{title}, #{content})
+		values (#{userId}, #{title}, #{content})
 	</insert>
 	
 	<!-- List<Object> viewNotice(String noticeId) throws SQLException; -->
