@@ -15,7 +15,7 @@
 	<select id="getSido" resultMap="DongCodeDto">
 		SELECT dong_code, sido_name 
 		FROM dongcode
-		where right(dong_code,8) = '00000000'
+		where right(dong_code,8) = '00000000' or dong_code = '3611000000'
 	</select>
 	
 	<select id="getGugun" parameterType="string" resultMap="DongCodeDto">
@@ -48,7 +48,6 @@
 		SELECT d.sido_name sidoName, h.lat, h.lng  
 		FROM houseinfo h 
 		join dongcode d 
-		on h.dong_code = d.dong_code
-		group by left(h.dong_code,2) limit 1000000
+		on h.dong_code = d.dong_code limit 1000000
 	</select>
 </mapper>
