@@ -66,7 +66,7 @@
 	</select>
 	
 	<select id="getAptDealList" parameterType="string" resultMap="AptDealInfoDto"> 
-		SELECT * FROM housedeal where apt_code = #{code}
+		SELECT * FROM housedeal where apt_code = #{code} ORDER BY deal_year ASC , deal_month ASC , deal_day ASC;
 	</select>
 
 	
