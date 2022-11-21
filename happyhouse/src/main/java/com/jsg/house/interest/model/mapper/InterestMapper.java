@@ -9,7 +9,7 @@ public interface InterestMapper {
 
 	List<Object> getInterests(int userid) throws SQLException;
 
-	int addIntersts(Interest interest) throws SQLException;
+	int addInterests(Interest interest) throws SQLException;
 
 	int deleteIntersts(int id) throws SQLException;
 
