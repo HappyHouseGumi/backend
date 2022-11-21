@@ -8,7 +8,7 @@ public interface InterestService {
 
 	List<Object> getIntersts(int userid) throws Exception;
 
-	int addIntersts(Interest interest) throws Exception;
+	int addInterests(Interest interest) throws Exception;
 	int deleteIntersts(int id) throws Exception;
 
 }
