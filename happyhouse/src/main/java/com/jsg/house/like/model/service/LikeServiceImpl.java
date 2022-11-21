@@ -94,4 +94,19 @@ public class LikeServiceImpl implements LikeService {
 		return checkSum;
 	}
 
+
+	@Override
+	public int getTotalLike(HashMap<String, Object> map) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.getTotalLike(map);
+			if (checkSum == -1) {
+				throw new NotChangeDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NotChangeDataException();
+		}
+		return checkSum;
+	}
 }

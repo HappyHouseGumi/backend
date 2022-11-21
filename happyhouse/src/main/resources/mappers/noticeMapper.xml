@@ -11,6 +11,13 @@
 		</if>
 	</sql>
 
+	<!-- int getTotalNotice(HashMap<String, Object> map) throws SQLException; -->
+	<select id="getTotalNotice" parameterType="map" resultType="int">
+		select count(*)
+		from notice_view
+		<include refid="search"></include>
+	</select>
+	
 	<!-- List<Object> listNotice(HashMap<String, Object> map) throws SQLException; -->
 	<select id="listNotice" parameterType="map" resultType="notice">
 		select id, userId, title, content, regDate

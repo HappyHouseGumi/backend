@@ -15,4 +15,6 @@ public interface LikeService {
 
 	int checkLike(HashMap<String, Object> map);
 
+	int getTotalLike(HashMap<String, Object> map);
+
 }

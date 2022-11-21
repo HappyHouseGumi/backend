@@ -42,6 +42,19 @@ public class RestLikeController {
 		log.info("List Controller 생성자 호출");
 		this.service = service;
 	}
+	
+	@ApiOperation(value = "Like 리스트의 개수를 불러온다.", notes = "관심 글 전체 리스트의 개수를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@PostMapping("/count")
+	public ResponseEntity<?> getTotalLike(@RequestBody HashMap<String, Object> map) {
+		log.debug("Board List Count : ");
+		int checkSum = service.getTotalLike(map);
+		log.debug(checkSum+"");
+		List<Object> checkList = new ArrayList<Object>();
+		checkList.add(checkSum);
+		flag.setFlag("success");
+		flag.setData(checkList);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "Like 리스트를 불러온다.", notes = "관심 글 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping("/list")
