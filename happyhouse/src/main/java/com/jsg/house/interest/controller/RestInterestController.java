@@ -82,4 +82,5 @@ public class RestInterestController {
 		}
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
+	
 }

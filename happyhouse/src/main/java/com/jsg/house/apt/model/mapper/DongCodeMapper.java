@@ -12,4 +12,5 @@ public interface DongCodeMapper {
 	List<Object> clusterSido() throws SQLException;
 	List<Object> clusterGugun() throws SQLException;
 	List<Object> cluster() throws SQLException;
+	Object getLatLng(String dongCode) throws SQLException;
 }

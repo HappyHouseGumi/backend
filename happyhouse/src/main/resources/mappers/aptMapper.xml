@@ -57,7 +57,7 @@
 	</resultMap>
 	<select id="getAptList" parameterType="string" resultMap="AptInfoDto">
 		SELECT apt_code, build_year, road_name, apartment_name, lat, lng  FROM houseinfo
-		WHERE dong_code = #{code}
+		WHERE dong_code = #{code} 
 	</select>
 	<select id="getsidogugunAptList" parameterType="string" resultMap="AptInfoDto">
 		SELECT apt_code, build_year, road_name, apartment_name, lat, lng  FROM houseinfo h
@@ -66,7 +66,7 @@
 	</select>
 	
 	<select id="getAptDealList" parameterType="string" resultMap="AptDealInfoDto"> 
-		SELECT * FROM housedeal where apt_code = #{code} ORDER BY deal_year ASC , deal_month ASC , deal_day ASC;
+		SELECT * FROM happy_house.houseDeal where apt_code = #{code} ORDER BY deal_year ASC , deal_month ASC , deal_day ASC;
 	</select>
 
 	
