@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
 
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("2. User")
+				.groupName("b. User")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house.user"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정
@@ -39,7 +39,7 @@ public class SwaggerConfiguration {
 		
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("3. Board")
+				.groupName("c. Board")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house.board"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정
@@ -53,7 +53,7 @@ public class SwaggerConfiguration {
 		
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("4. Notice")
+				.groupName("d. Notice")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house.notice"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정
@@ -67,7 +67,7 @@ public class SwaggerConfiguration {
 		
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("5. Interest")
+				.groupName("e. Interest")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house.interest"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정
@@ -81,7 +81,7 @@ public class SwaggerConfiguration {
 		
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("6. Like")
+				.groupName("f. Like")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house.like"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정
@@ -96,7 +96,7 @@ public class SwaggerConfiguration {
 		
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("7. Apt")
+				.groupName("g. Apt")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house.apt"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정
@@ -111,7 +111,7 @@ public class SwaggerConfiguration {
 		
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("8. QnA")
+				.groupName("h. QnA")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house.qna"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정
@@ -126,7 +126,7 @@ public class SwaggerConfiguration {
 		
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("9. QnA Comment")
+				.groupName("i. QnA Comment")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house.qnacomment"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정
@@ -141,7 +141,7 @@ public class SwaggerConfiguration {
 		
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("10. Email Comment")
+				.groupName("j. Email Comment")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house.email"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정
@@ -156,7 +156,7 @@ public class SwaggerConfiguration {
 		
 		return new Docket(DocumentationType.SWAGGER_2) // Swagger 2.0 기반의 문서 작성
 				.apiInfo(apiInfo) // 문서에 대한 정보를 설정한다.
-				.groupName("1. 전체")
+				.groupName("a. 전체")
 				.select() // ApiSelectorBuilder를 반환하며 상세한 설정 처리
 				.apis(RequestHandlerSelectors.basePackage("com.jsg.house"))// 대상으로하는 api 설정
 				.paths(PathSelectors.any()) // controller에서 swagger를 지정할 대상 path 설정

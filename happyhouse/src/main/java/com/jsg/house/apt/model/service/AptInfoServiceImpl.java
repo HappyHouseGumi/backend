@@ -31,5 +31,11 @@ public class AptInfoServiceImpl implements AptInfoService {
 		// TODO Auto-generated method stub
 		return mapper.getsidogugunAptList(map);
 	}
+
+	@Override
+	public List<Object> getAptDealList(String code) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.getAptDealList(code);
+	}
 	
 }

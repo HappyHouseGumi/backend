@@ -77,9 +77,25 @@ public class RestAptController {
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@ApiOperation(value = "아파트 정보를 불러온다.", notes = "code : string(전체코드 적기 ex 1111010100)\n 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	@GetMapping("/list/{code}")
-	public ResponseEntity<?> getAptList(@PathVariable(name = "code") String code) {
+	@ApiOperation(value = "아파트 거래정보를 불러온다.", notes = "code : string(전체코드 적기 ex 11110000000001)\n 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/detail/{code}")
+	public ResponseEntity<?> getAptDealList(@PathVariable String code) {
+		flag.setFlag("fail");
+		flag.setData(null);
+		try {
+			List<Object> deallist = infoService.getAptDealList(code);
+			flag.setFlag("success");
+			flag.setData(deallist);
+			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK); 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	@ApiOperation(value = "아파트 리스트를 불러온다.", notes = "code : string(전체코드 적기 ex 1111010100)\n 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/list/{dongcode}")
+	public ResponseEntity<?> getAptList(@PathVariable String code) {
 		flag.setFlag("fail");
 		flag.setData(null);
 		try {
@@ -162,4 +178,6 @@ public class RestAptController {
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	
 }

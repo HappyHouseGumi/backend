@@ -7,4 +7,5 @@ public interface AptInfoService {
 	List<Object> getAptList(String code) throws Exception;
 	List<Object> getDongNameAptList(String dongName) throws Exception;
 	List<Object> getsidogugunAptList(HashMap<String, String> map)throws Exception;
+	List<Object> getAptDealList(String code) throws Exception;
 }

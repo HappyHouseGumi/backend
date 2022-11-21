@@ -14,8 +14,38 @@
 	@ApiModelProperty(value = "위도")
 	private String lat;
 	@ApiModelProperty(value = "경도")
-	private String lng; -->
+	private String lng; 
 	
+	@ApiModelProperty(value = "아파트 매매 식별 번호")
+	private long no;
+	@ApiModelProperty(value = "매매가")
+	private String dealAmount;
+	@ApiModelProperty(value = "매매년도")
+	private int dealYear;
+	@ApiModelProperty(value = "매매월")
+	private int dealMonth;
+	@ApiModelProperty(value = "매매일")
+	private int dealDay;
+	@ApiModelProperty(value = "지역")
+	private String area;
+	@ApiModelProperty(value = "층")
+	private String floor;
+	@ApiModelProperty(value = "아파트 코드")
+	private long aptCode;
+	
+	-->
+	
+	
+	<resultMap type="AptDeal" id="AptDealInfoDto">
+		<result column="no" property="no"/>
+		<result column="deal_amount" property="dealAmount"/>
+		<result column="deal_year" property="dealYear"/>
+		<result column="deal_month" property="dealMonth"/>
+		<result column="deal_day" property="dealDay"/>
+		<result column="area" property="area"/>
+		<result column="floor" property="floor"/>
+		<result column="apt_code" property="aptCode"/>
+	</resultMap>
 	
 	<resultMap type="aptinfo" id="AptInfoDto">
 		<result column="apt_code" property="aptcode"/>
@@ -25,7 +55,6 @@
 		<result column="lat" property="lat"/>
 		<result column="lng" property="lng"/>
 	</resultMap>
-
 	<select id="getAptList" parameterType="string" resultMap="AptInfoDto">
 		SELECT apt_code, build_year, road_name, apartment_name, lat, lng  FROM houseinfo
 		WHERE dong_code = #{code}
@@ -36,6 +65,9 @@
 		WHERE d.sido_name = #{sido} and d.gugun_name = #{gugun};
 	</select>
 	
+	<select id="getAptDealList" parameterType="string" resultMap="AptDealInfoDto"> 
+		SELECT * FROM housedeal where apt_code = #{code}
+	</select>
 
 	
 </mapper>
