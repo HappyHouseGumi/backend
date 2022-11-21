@@ -10,8 +10,8 @@
 	</select>
 	
 	<insert id="addInterests" parameterType="interest">
-		INSERT INTO interest (user_id,dong_code) 
-		VALUES(#{userId},#{dongCode})
+		INSERT INTO interest (user_id,sido_name,gugun_name) 
+		VALUES(#{userId},#{sidoName},#{gugunName})
 	</insert>
 	
 	<update id="deleteInterests" parameterType="int">
