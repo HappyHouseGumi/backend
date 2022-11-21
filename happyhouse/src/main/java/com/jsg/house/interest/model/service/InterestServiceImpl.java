@@ -15,7 +15,7 @@ public class InterestServiceImpl implements InterestService {
 	private InterestMapper mapper;
 	
 	@Override
-	public List<Object> getIntersts(int userid) throws Exception {
+	public List<Object> getInterests(int userid) throws Exception {
 		// TODO Auto-generated method stub
 		return mapper.getInterests(userid);
 	}
@@ -27,9 +27,9 @@ public class InterestServiceImpl implements InterestService {
 	}
 
 	@Override
-	public int deleteIntersts(int id) throws Exception {
+	public int deleteInterests(int id) throws Exception {
 		// TODO Auto-generated method stub
-		return mapper.deleteIntersts(id);
+		return mapper.deleteInterests(id);
 	}
 
 }

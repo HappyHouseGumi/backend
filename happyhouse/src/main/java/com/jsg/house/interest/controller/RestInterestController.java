@@ -39,7 +39,7 @@ public class RestInterestController {
 		flag.setFlag("fail");
 		flag.setData(null);
 		try {
-			List<Object> list = service.getIntersts(userid);
+			List<Object> list = service.getInterests(userid);
 			if(list.size() != 0) {
 				flag.setFlag("success");
 				flag.setData(list);	
@@ -72,7 +72,7 @@ public class RestInterestController {
 		flag.setFlag("fail");
 		flag.setData(null);
 		try {
-			int checkSum = service.deleteIntersts(id);
+			int checkSum = service.deleteInterests(id);
 			if(checkSum != 0) {
 				flag.setFlag("success");
 			}

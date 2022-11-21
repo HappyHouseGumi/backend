@@ -6,9 +6,9 @@ import com.jsg.house.interest.model.dto.Interest;
 
 public interface InterestService {
 
-	List<Object> getIntersts(int userid) throws Exception;
+	List<Object> getInterests(int userid) throws Exception;
 
 	int addInterests(Interest interest) throws Exception;
-	int deleteIntersts(int id) throws Exception;
+	int deleteInterests(int id) throws Exception;
 
 }
