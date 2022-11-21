@@ -11,6 +11,6 @@ public interface InterestMapper {
 
 	int addInterests(Interest interest) throws SQLException;
 
-	int deleteIntersts(int id) throws SQLException;
+	int deleteInterests(int id) throws SQLException;
 
 }
