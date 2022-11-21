@@ -1,5 +1,6 @@
 package com.jsg.house.like.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,6 +54,19 @@ public class RestLikeController {
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Like Check를 불러온다.", notes = "관심 글의 존재 여부 확인을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@PostMapping("/check")
+	public ResponseEntity<?> checkLike(@RequestBody HashMap<String, Object> map) {
+		log.debug("Like Check : ");
+		int checkSum = service.checkLike(map);
+		log.debug(checkSum+"");
+		List<Object> checkList = new ArrayList<Object>();
+		checkList.add(checkSum);
+		flag.setFlag("success");
+		flag.setData(checkList);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
+
 	@ApiOperation(value = "Like regist를 불러온다.", notes = "관심 글 등록을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping()
 	public ResponseEntity<?> registLike(@RequestBody Like like) {
@@ -63,11 +77,15 @@ public class RestLikeController {
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Like delete를 불러온다.", notes = "관심 글 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	@DeleteMapping("/{likeid}")
-	public ResponseEntity<?> deleteLike(@PathVariable("likeid") String likeId) {
-		log.debug("Like delete : ", likeId);
-		service.deleteLike(likeId);
+	@ApiOperation(value = "Like delete를 불러온다.", notes = "관심 글 삭제를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@DeleteMapping("/{boardid}/{userid}")
+	public ResponseEntity<?> deleteLike(@PathVariable("boardid") String boardId,
+			@PathVariable("userid") String userId) {
+		log.debug("Like delete : ", boardId, userId);
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("boardId", boardId);
+		map.put("userId", userId);
+		service.deleteLike(map);
 		flag.setFlag("success");
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);

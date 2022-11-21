@@ -66,10 +66,10 @@ public class LikeServiceImpl implements LikeService {
 	}
 
 	@Override
-	public void deleteLike(String likeId) {
+	public void deleteLike(HashMap<String, String> map) {
 		int checkSum = 0;
 		try {
-			checkSum = mapper.deleteLike(likeId);
+			checkSum = mapper.deleteLike(map);
 			if (checkSum != 1) {
 				throw new NotChangeDataException();
 			}
@@ -77,6 +77,21 @@ public class LikeServiceImpl implements LikeService {
 //			e.printStackTrace();
 			throw new NotChangeDataException();
 		}
+	}
+
+	@Override
+	public int checkLike(HashMap<String, Object> map) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.checkLike(map);
+			if (checkSum == -1) {
+				throw new NotChangeDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NotChangeDataException();
+		}
+		return checkSum;
 	}
 
 }

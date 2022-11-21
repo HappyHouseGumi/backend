@@ -12,6 +12,8 @@ public interface LikeMapper {
 
 	int registLike(Like like) throws SQLException;
 
-	int deleteLike(String likeId) throws SQLException;
+	int deleteLike(HashMap<String, String> map) throws SQLException;
+
+	int checkLike(HashMap<String, Object> map) throws SQLException;
 
 }

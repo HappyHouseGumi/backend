@@ -150,5 +150,20 @@ public class BoardServiceImpl implements BoardService {
 
 		return dongcode;
 	}
+	
+	@Override
+	public int getTotalBoard(HashMap<String, Object> map) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.getTotalBoard(map);
+			if (checkSum == -1) {
+				throw new NotChangeDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NotChangeDataException();
+		}
+		return checkSum;
+	}
 
 }

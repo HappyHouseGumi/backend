@@ -1,5 +1,6 @@
 package com.jsg.house.board.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,6 +65,19 @@ public class RestBoardController {
 			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ApiOperation(value = "Board 리스트의 개수를 불러온다.", notes = "게시판 전체 리스트의 개수를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@PostMapping("/count")
+	public ResponseEntity<?> getTotalBoard(@RequestBody HashMap<String, Object> map) {
+		log.debug("Board List Count : ");
+		int checkSum = service.getTotalBoard(map);
+		log.debug(checkSum+"");
+		List<Object> checkList = new ArrayList<Object>();
+		checkList.add(checkSum);
+		flag.setFlag("success");
+		flag.setData(checkList);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Board 리스트를 불러온다.", notes = "게시판 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
