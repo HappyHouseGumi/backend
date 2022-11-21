@@ -47,4 +47,10 @@ public class DongCodeServiceImpl implements DongCodeService {
 		// TODO Auto-generated method stub
 		return mapper.cluster();
 	}
+
+	@Override
+	public Object getLatLng(String dongCode) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.getLatLng(dongCode);
+	}
 }

@@ -12,4 +12,5 @@ public interface DongCodeService {
 	List<Object> clusterSido() throws Exception;
 	List<Object> cluster() throws Exception;
 	List<Object> clusterGugun() throws Exception;
+	Object getLatLng(String dongCode) throws Exception;
 }

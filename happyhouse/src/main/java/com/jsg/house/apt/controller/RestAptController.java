@@ -1,5 +1,6 @@
 package com.jsg.house.apt.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -83,7 +84,9 @@ public class RestAptController {
 		flag.setFlag("fail");
 		flag.setData(null);
 		try {
+			System.out.println(System.currentTimeMillis());
 			List<Object> deallist = infoService.getAptDealList(code);
+			System.out.println(System.currentTimeMillis());
 			flag.setFlag("success");
 			flag.setData(deallist);
 			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK); 
@@ -109,6 +112,9 @@ public class RestAptController {
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	
+	
 	@GetMapping("/lists/{sido}/{gugun}")
 	public ResponseEntity<?> getsidogugunAptList(@PathVariable(name = "sido") String sido, @PathVariable(name = "gugun") String gugun) {
 		flag.setFlag("fail");
@@ -131,6 +137,24 @@ public class RestAptController {
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@ApiOperation(value = "latlng 정보를 불러온다.", notes = "'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/latlng/{dongCode}")
+	public ResponseEntity<?> getLatLng(@PathVariable String dongCode) {
+		flag.setFlag("fail");
+		flag.setData(null);
+		try {
+			List<Object> data = new ArrayList<Object>();
+			
+			data.add(dongService.getLatLng(dongCode));
+			flag.setFlag("success");
+			flag.setData(data);
+			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK); 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	@ApiOperation(value = "클러스터 시도 정보를 불러온다.", notes = "'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping("/cluster/sido")
 	public ResponseEntity<?> getAptList() {
