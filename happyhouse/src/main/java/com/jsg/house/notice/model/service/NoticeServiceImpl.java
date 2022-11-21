@@ -109,4 +109,18 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 	}
 
+	@Override
+	public int getTotalNotice(HashMap<String, Object> map) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.getTotalNotice(map);
+			if (checkSum == -1) {
+				throw new NotChangeDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NotChangeDataException();
+		}
+		return checkSum;
+	}
 }

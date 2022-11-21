@@ -16,4 +16,6 @@ public interface LikeMapper {
 
 	int checkLike(HashMap<String, Object> map) throws SQLException;
 
+	int getTotalLike(HashMap<String, Object> map) throws SQLException;
+
 }

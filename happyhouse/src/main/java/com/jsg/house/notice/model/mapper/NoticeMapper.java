@@ -18,4 +18,6 @@ public interface NoticeMapper {
 
 	int deleteNotice(String noticeId) throws SQLException;
 
+	int getTotalNotice(HashMap<String, Object> map) throws SQLException;
+
 }

@@ -16,5 +16,7 @@ public interface NoticeService {
 	void modifyNotice(HashMap<String, Object> map);
 
 	void deleteNotice(String noticeId);
+
+	int getTotalNotice(HashMap<String, Object> map);
 	
 }

@@ -10,6 +10,13 @@
 		</if>
 	</sql>
 	
+	<!-- int getTotalLike(HashMap<String, Object> map) throws SQLException; -->
+	<select id="getTotalLike" parameterType="map" resultType="int">
+		select count(*)
+		from like_view
+		<include refid="search"></include>
+	</select>
+	
 	<!-- List<Object> listLike(HashMap<String, Object> map) throws SQLException; -->
 	<select id="listLike" parameterType="map" resultType="likeBoard">
 		select boardId, userId, nickName, subject, title

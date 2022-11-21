@@ -1,5 +1,6 @@
 package com.jsg.house.notice.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,6 +42,19 @@ public class RestNoticeController {
 	public RestNoticeController(NoticeService service) {
 		log.info("Notice Controller 생성자 호출");
 		this.service = service;
+	}
+	
+	@ApiOperation(value = "Notice 리스트의 개수를 불러온다.", notes = "공지사항 전체 리스트의 개수를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@PostMapping("/count")
+	public ResponseEntity<?> getTotalNotice(@RequestBody HashMap<String, Object> map) {
+		log.debug("Board List Count : ");
+		int checkSum = service.getTotalNotice(map);
+		log.debug(checkSum+"");
+		List<Object> checkList = new ArrayList<Object>();
+		checkList.add(checkSum);
+		flag.setFlag("success");
+		flag.setData(checkList);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Notice 리스트를 불러온다.", notes = "공지사항 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
