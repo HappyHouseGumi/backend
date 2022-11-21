@@ -21,4 +21,6 @@ public interface BoardService {
 
 	List<Object> getGugunName(String code);
 
+	int getTotalBoard(HashMap<String, Object> map);
+
 }

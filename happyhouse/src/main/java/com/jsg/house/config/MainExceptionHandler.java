@@ -33,7 +33,8 @@ public class MainExceptionHandler {
 		map.put("msg", "sql에 데이터가 없습니다.");
 		data.add(map);
 		flag.setData(data);
-		return new ResponseEntity<HttpFlag>(flag, HttpStatus.FORBIDDEN);
+		// return new ResponseEntity<HttpFlag>(flag, HttpStatus.FORBIDDEN);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(NotChangeDataException.class)
@@ -42,7 +43,8 @@ public class MainExceptionHandler {
 		map.put("msg", "sql에 데이터가 추가 되지 않았습니다.");
 		data.add(map);
 		flag.setData(data);
-		return new ResponseEntity<HttpFlag>(flag, HttpStatus.FORBIDDEN);
+		// return new ResponseEntity<HttpFlag>(flag, HttpStatus.FORBIDDEN);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 	
 	private void clear() {

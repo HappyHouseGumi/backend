@@ -11,6 +11,8 @@ public interface LikeService {
 
 	void registLike(Like like);
 
-	void deleteLike(String likeId);
+	void deleteLike(HashMap<String, String> map);
+
+	int checkLike(HashMap<String, Object> map);
 
 }

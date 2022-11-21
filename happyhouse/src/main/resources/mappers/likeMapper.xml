@@ -12,24 +12,30 @@
 	
 	<!-- List<Object> listLike(HashMap<String, Object> map) throws SQLException; -->
 	<select id="listLike" parameterType="map" resultType="likeBoard">
-		select id, boardId, userId, nickName, subject, title
+		select boardId, userId, nickName, subject, title
 		from like_view
 		<include refid="search"></include>
-		order by id desc
+		order by regDate desc
 		limit #{start}, #{listsize}
 	</select>
 
 	<!-- int registLike(Like like) throws SQLException; -->
 	<insert id="registLike" parameterType="like">
-		insert into `like` (board_id, user_id)
+		insert into like_board (board_id, user_id)
 		values (#{boardId}, #{userId})
 	</insert>
 
-	<!-- int deleteLike(String likeId) throws SQLException; -->
-	<update id="deleteLike" parameterType="string">
-		update `like`
-		set state = -1
-		where id = #{likeId}
-	</update>
+	<!-- int deleteLike(HashMap<String, String> map) throws SQLException; -->
+	<delete id="deleteLike" parameterType="map">
+		delete from like_board
+		where board_id = #{boardId} and user_id = #{userId}
+	</delete>
+	
+	<!-- int checkLike(HashMap<String, Object> map) throws SQLException; -->
+	<select id="checkLike" parameterType="map" resultType="int">
+		select count(*)
+		from like_board
+		where board_id = #{boardId} and user_id = #{userId}
+	</select>
 	
 </mapper>
