@@ -56,7 +56,7 @@ public class RestInterestController {
 		flag.setFlag("fail");
 		flag.setData(null);
 		try {
-			int checkSum = service.addIntersts(interest);
+			int checkSum = service.addInterests(interest);
 			if(checkSum != 0) {
 				flag.setFlag("success");
 			}
@@ -67,7 +67,7 @@ public class RestInterestController {
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{userid}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteIntersts(@PathVariable int id) {
 		flag.setFlag("fail");
 		flag.setData(null);

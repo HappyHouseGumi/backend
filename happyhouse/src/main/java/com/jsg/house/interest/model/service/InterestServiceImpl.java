@@ -21,9 +21,9 @@ public class InterestServiceImpl implements InterestService {
 	}
 
 	@Override
-	public int addIntersts(Interest interest) throws Exception {
+	public int addInterests(Interest interest) throws Exception {
 		// TODO Auto-generated method stub
-		return mapper.addIntersts(interest);
+		return mapper.addInterests(interest);
 	}
 
 	@Override
