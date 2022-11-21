@@ -30,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		param.put("key", map.get("key") == null ? "" : (String) map.get("key"));
 		param.put("word", map.get("word") == null ? "" : map.get("word"));
-		int pgNo = Integer.parseInt((String) map.get("pgno") == null ? "1" : (String) map.get("pgno"));
+		int pgNo = (Integer)map.get("pgno") == null ? 1 : (Integer)map.get("pgno");
 		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
 		param.put("start", start);
 		param.put("listsize", SizeConstant.LIST_SIZE);
