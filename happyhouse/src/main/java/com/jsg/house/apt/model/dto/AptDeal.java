@@ -8,7 +8,7 @@ public class AptDeal {
 
 	@ApiModelProperty(value = "아파트 매매 식별 번호")
 	private long no;
-	@ApiModelProperty(value = "매매양")
+	@ApiModelProperty(value = "매매가")
 	private String dealAmount;
 	@ApiModelProperty(value = "매매년도")
 	private int dealYear;

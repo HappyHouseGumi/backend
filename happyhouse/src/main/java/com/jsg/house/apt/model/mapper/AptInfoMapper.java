@@ -8,4 +8,6 @@ public interface AptInfoMapper {
 	List<Object> getAptList(String code) throws SQLException;
 
 	List<Object> getsidogugunAptList(HashMap<String, String> map) throws SQLException;
+
+	List<Object> getAptDealList(String code) throws SQLException;
 }
