@@ -9,45 +9,46 @@ public class Interest {
 	private int id;
 	@ApiModelProperty(value = "사용자번호")
 	private int userId;
-	@ApiModelProperty(value = "동코드")
-	private int dongCode;
-
-	public Interest() {	}
-
-	public Interest(int id, int userId, int dongCode) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.dongCode = dongCode;
-	}
-
+	@ApiModelProperty(value = "시도네임")
+	private String sidoName;
+	@ApiModelProperty(value = "구군임")
+	private String gugunName;
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public int getUserId() {
 		return userId;
 	}
-
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-
-	public int getDongCode() {
-		return dongCode;
+	public String getSidoName() {
+		return sidoName;
 	}
-
-	public void setDongCode(int dongCode) {
-		this.dongCode = dongCode;
+	public void setSidoName(String sidoName) {
+		this.sidoName = sidoName;
 	}
-
+	public String getGugunName() {
+		return gugunName;
+	}
+	public void setGugunName(String gugunName) {
+		this.gugunName = gugunName;
+	}
+	public Interest(int id, int userId, String sidoName, String gugunName) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.sidoName = sidoName;
+		this.gugunName = gugunName;
+	}
 	@Override
 	public String toString() {
-		return "Interest [id=" + id + ", userId=" + userId + ", dongCode=" + dongCode + "]";
+		return "Interest [id=" + id + ", userId=" + userId + ", sidoName=" + sidoName + ", gugunName=" + gugunName
+				+ "]";
 	}
+
 
 }
