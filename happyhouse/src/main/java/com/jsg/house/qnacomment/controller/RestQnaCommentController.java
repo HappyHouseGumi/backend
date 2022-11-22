@@ -29,8 +29,8 @@ import io.swagger.annotations.ApiOperation;
 
 @Api("QnA Comment(댓글) 컨트롤러 API V1") // http://localhost/happy/swagger-ui/index.html
 @RestController
-@CrossOrigin
 @RequestMapping("/qnacomment")
+@CrossOrigin
 public class RestQnaCommentController {
 
 	private static final Logger log = LoggerFactory.getLogger(RestBoardController.class);
@@ -49,21 +49,10 @@ public class RestQnaCommentController {
 	@GetMapping("/{qnaId}")
 	public ResponseEntity<?> listQnAComment(@PathVariable int qnaId) {
 		log.debug("QnA Comment 불러오기.");
-		try {
-			List<Object> comment = service.listQnaComment(qnaId);
-			if (comment == null || comment.isEmpty()) {
-				flag.setFlag("fail");
-				flag.setData(null);
-			} else {
-				flag.setFlag("success");
-				flag.setData(comment);
-			}
-			return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		List<Object> comment = service.listQnaComment(qnaId);
+		flag.setFlag("success");
+		flag.setData(comment);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "댓글 작성을 불러온다.", notes = "댓글 작성을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
@@ -71,60 +60,32 @@ public class RestQnaCommentController {
 	public ResponseEntity<?> writeQnAComment(@RequestBody QnaComment comment) {
 		log.debug("Comment 작성하기 : ", comment);
 		List<Object> comments = new ArrayList<Object>();
-		try {
-			System.out.println(comment);
-			int checkSum = service.writeQnaComment(comment);
-			comments = service.listQnaComment(comment.getQnaId());
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag.setFlag("fail");
-		}
+		service.writeQnaComment(comment);
+		comments = service.listQnaComment(comment.getQnaId());
+		flag.setFlag("success");
 		flag.setData(comments);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	
+
 //	@ApiOperation(value = "댓글 상세 보기를 불러온다.", notes = "댓글 상세 보기를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
-	
+
 	@ApiOperation(value = "댓글 수정을 불러온다.", notes = "댓글 수정을 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PutMapping("/{id}")
-	public ResponseEntity<?> modifyQnAComment(@PathVariable int id, @RequestBody HashMap<String,Object> map) {
+	public ResponseEntity<?> modifyQnAComment(@PathVariable int id, @RequestBody HashMap<String, Object> map) {
 		log.debug("Comment 수정하기 : ");
-		try {
-			map.put("id", id);
-			int checkSum = service.modifyQnaComment(map);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag.setFlag("fail");
-		}
+		map.put("id", id);
+		service.modifyQnaComment(map);
+		flag.setFlag("success");
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "댓글 삭제를 불러온다.", notes = "댓글 삭제를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteComment(@PathVariable("id") int id) {
 		log.debug("Comment 삭제하기 : ", id);
-		try {
-			int checkSum = service.deleteQnaComment(id);
-			if (checkSum == 0) {
-				throw new Exception();
-			} else {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag.setFlag("fail");
-		}
+		service.deleteQnaComment(id);
+		flag.setFlag("success");
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
