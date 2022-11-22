@@ -204,7 +204,7 @@ public class RestAptController {
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@GetMapping("/inter/{id}")
+	@GetMapping("/inter/{userId}")
 	public ResponseEntity<?> getUserInterApts(@PathVariable int userId) {
 		flag.setFlag("fail");
 		flag.setData(null);
@@ -224,6 +224,7 @@ public class RestAptController {
 	public ResponseEntity<?> addUserInterApt(@RequestBody HashMap<String,Object> map) {
 		flag.setFlag("fail");
 		flag.setData(null);
+		
 		try {
 			int checkSum = infoService.addUserInterApt(map);
 			flag.setFlag("success");
@@ -235,10 +236,14 @@ public class RestAptController {
 		}
 		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
 	@DeleteMapping("/inter")
 	public ResponseEntity<?> deleteUserInterApt(@RequestBody HashMap<String,Object> map) {
 		flag.setFlag("fail");
 		flag.setData(null);
+		for(String key : map.keySet()) {
+			System.out.println(key + " "+ map.get(key));
+		}
 		try {
 			int checkSum = infoService.deleteUserInterApt(map);
 			flag.setFlag("success");

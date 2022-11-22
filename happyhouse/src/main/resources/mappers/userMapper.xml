@@ -27,7 +27,7 @@
 	<select id="loginUser" parameterType="map" resultMap="userDto">
 		SELECT id, email, nick_name, reg_date, location, grade
 		FROM user
-		WHERE email = #{email} AND password = #{password};
+		WHERE email = #{email} AND password = #{password} AND grade != -1;
 	</select>
 	
 	<select id="findUserByEmail" parameterType="string" resultType="int">
