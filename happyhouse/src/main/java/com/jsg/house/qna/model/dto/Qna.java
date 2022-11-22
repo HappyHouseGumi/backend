@@ -12,13 +12,16 @@ public class Qna {
 	private String userName;
 	@ApiModelProperty(value = "작성자 비밀번호")
 	private String password;
-	
 	@ApiModelProperty(value = "글제목")
 	private String title;
 	@ApiModelProperty(value = "글내용")
 	private String content;
 	@ApiModelProperty(value = "작성일")
 	private String regDate;
+	
+	public Qna() {
+		super();
+	}
 	public Qna(int id, String userName, String password,String title, String content, String regDate) {
 		super();
 		this.id = id;
@@ -28,6 +31,7 @@ public class Qna {
 		this.content = content;
 		this.regDate = regDate;
 	}
+	
 	public int getId() {
 		return id;
 	}
@@ -58,19 +62,17 @@ public class Qna {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	@Override
 	public String toString() {
 		return "QnA [id=" + id + ", userName=" + userName + ", title=" + title + ", content=" + content + ", regDate="
 				+ regDate + "]";
 	}
-	
-	
 	
 }

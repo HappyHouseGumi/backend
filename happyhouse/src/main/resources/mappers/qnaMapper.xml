@@ -3,33 +3,62 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jsg.house.qna.model.mapper.QnaMapper">
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			where ${key} like concat('%', #{word}, '%')
+		</if>
+	</sql>
 	
+	<!-- List<Object> listQna() throws SQLException; -->
 	<select id="listQna" resultType="Qna">
-		SELECT * FROM qna_view
+		SELECT id, userName, title
+		FROM qna_view
 	</select>
 	
+	<!-- List<Object> searchQna(HashMap<String, Object> map) throws SQLException; -->
 	<select id="searchQna" parameterType="map" resultType="Qna">
-		SELECT * FROM qna_view 
+		SELECT id, userName, title
+		FROM qna_view 
 		WHERE ${type} LIKE CONCAT('%',#{text},'%');
 	</select>
 	
-	<select id="detailQna" parameterType="int" resultType="Qna">
-		SELECT * FROM qna_view WHERE id = #{id}
+	<!-- int getTotalQna(HashMap<String, Object> map) throws SQLException; -->
+	<select id="getTotalQna" parameterType="map" resultType="int">
+		select count(*)
+		from qna_view
+		<include refid="search"></include>
 	</select>
 	
+	<!-- List<Object> listQnaPaging(HashMap<String, Object> param) throws SQLException; -->
+	<select id="listQnaPaging" parameterType="map" resultType="Qna">
+		select id, userName, title
+		from qna_view
+		<include refid="search"></include>
+		order by id desc
+		limit #{start}, #{listsize}
+	</select>
+
+	<!-- Object detailQna(int id) throws SQLException; -->
+	<select id="detailQna" parameterType="int" resultType="Qna">
+		SELECT id, userName, password, title, content, regDate
+		FROM qna_view WHERE id = #{id}
+	</select>
 	
-	
+	<!-- int addQna(Qna qna) throws SQLException; -->
 	<insert id="addQna" parameterType="Qna">
 		INSERT INTO qna (username, password, title, content)
 		VALUES (#{userName}, #{password}, #{title}, #{content})
 	</insert>
 	
-	
-	
+	<!-- int deleteQna(int id) throws SQLException; -->
 	<update id="deleteQna" parameterType="int">
-		UPDATE qna SET state = -1 WHERE id = #{id}
+		UPDATE qna
+		SET state = -1
+		WHERE id = #{id}
 	</update>
 	
+	<!-- int modifyQna(HashMap<String,Object> map) throws SQLException; -->
 	<update id="modifyQna" parameterType="map">
 		UPDATE qna 
 		SET

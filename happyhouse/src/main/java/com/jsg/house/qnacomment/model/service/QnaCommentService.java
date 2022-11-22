@@ -9,12 +9,12 @@ import com.jsg.house.qnacomment.model.dto.QnaComment;
 
 public interface QnaCommentService {
 
-	List<Object> listQnaComment(int qnaId) throws Exception;
+	List<Object> listQnaComment(int qnaId);
 
-	int writeQnaComment(QnaComment comment) throws Exception;
+	void writeQnaComment(QnaComment comment);
 
-	int modifyQnaComment(HashMap<String,Object> map) throws Exception;
+	void modifyQnaComment(HashMap<String,Object> map);
 
-	int deleteQnaComment(int id) throws Exception;
+	void deleteQnaComment(int id);
 
 }
