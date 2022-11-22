@@ -2,39 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.jsg.house.apt.model.mapper.AptInfoMapper">
-	<!-- @ApiModelProperty(value = "아파트 코드 번호")
-	private long aptcode;
-	@ApiModelProperty(value = "아파트 건설 연도")
-	private int buildYear;
-	@ApiModelProperty(value = "주소")
-	private String roadName;
-	@ApiModelProperty(value = "아파트 이름")
-	private String apartmentName;
-	@ApiModelProperty(value = "위도")
-	private String lat;
-	@ApiModelProperty(value = "경도")
-	private String lng; 
-	
-	@ApiModelProperty(value = "아파트 매매 식별 번호")
-	private long no;
-	@ApiModelProperty(value = "매매가")
-	private String dealAmount;
-	@ApiModelProperty(value = "매매년도")
-	private int dealYear;
-	@ApiModelProperty(value = "매매월")
-	private int dealMonth;
-	@ApiModelProperty(value = "매매일")
-	private int dealDay;
-	@ApiModelProperty(value = "지역")
-	private String area;
-	@ApiModelProperty(value = "층")
-	private String floor;
-	@ApiModelProperty(value = "아파트 코드")
-	private long aptCode;
-	
-	-->
-	
+<mapper namespace="com.jsg.house.apt.model.mapper.AptInfoMapper">	
 	
 	<resultMap type="AptDeal" id="AptDealInfoDto">
 		<result column="no" property="no"/>
@@ -69,5 +37,13 @@
 		SELECT * FROM happy_house.houseDeal where apt_code = #{code} ORDER BY deal_year ASC , deal_month ASC , deal_day ASC;
 	</select>
 
-	
+	<select id="getUserInterApts" parameterType="int" resultMap="AptInfoDto">
+		SELECT i.apt_code, h.lat, h.lng FROM interestapt i join houseinfo h on i.apt_code = h.apt_code
+	</select>
+	<insert id="addUserInterApt" parameterType="map">
+		INSERT INTO interestapt ('user_id','apt_code') VALUES (#{userId},#{aptCode})
+	</insert>
+	<delete id="deleteUserInterApt" parameterType="map">
+		DELETE FROM interestapt WHERE user_id = #{userId} and apt_code = #{aptCode}
+	</delete>
 </mapper>
