@@ -41,7 +41,7 @@
 		SELECT i.apt_code, h.lat, h.lng FROM interestapt i join houseinfo h on i.apt_code = h.apt_code
 	</select>
 	<insert id="addUserInterApt" parameterType="map">
-		INSERT INTO interestapt ('user_id','apt_code') VALUES (#{userId},#{aptCode})
+		INSERT INTO interestapt (user_id,apt_code) VALUES (#{userId},#{aptCode})
 	</insert>
 	<delete id="deleteUserInterApt" parameterType="map">
 		DELETE FROM interestapt WHERE user_id = #{userId} and apt_code = #{aptCode}
