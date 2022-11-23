@@ -61,7 +61,6 @@ public class LikeServiceImpl implements LikeService {
 		} catch (SQLException e) {
 			// e.printStackTrace();
 			throw new NotChangeDataException();
-
 		}
 	}
 
@@ -106,6 +105,21 @@ public class LikeServiceImpl implements LikeService {
 		} catch (SQLException e) {
 			// e.printStackTrace();
 			throw new NotChangeDataException();
+		}
+		return checkSum;
+	}
+
+	@Override
+	public int getCountLike(String boardId) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.getCountLike(boardId);
+			if (checkSum == -1) {
+				throw new NoDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NoDataException();
 		}
 		return checkSum;
 	}

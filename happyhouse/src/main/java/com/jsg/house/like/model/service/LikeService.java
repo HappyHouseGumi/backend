@@ -17,4 +17,6 @@ public interface LikeService {
 
 	int getTotalLike(HashMap<String, Object> map);
 
+	int getCountLike(String boardId);
+
 }

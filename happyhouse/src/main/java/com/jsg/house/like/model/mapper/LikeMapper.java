@@ -18,4 +18,6 @@ public interface LikeMapper {
 
 	int getTotalLike(HashMap<String, Object> map) throws SQLException;
 
+	int getCountLike(String boardId) throws SQLException;
+
 }

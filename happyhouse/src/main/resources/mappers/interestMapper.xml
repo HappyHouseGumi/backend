@@ -3,20 +3,40 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jsg.house.interest.model.mapper.InterestMapper">
+
+	<resultMap type="InterestRanking" id="Ranking">
+		<result column="dong_code" property="dongCode"/>
+		<result column="sido_name" property="sidoName"/>
+		<result column="gugun_name" property="gugunName"/>
+		<result column="count" property="count"/>
+	</resultMap>
 	
+	<!-- List<Object> getInterests(int userid) throws SQLException; -->
 	<select id="getInterests" parameterType="int" resultType="interest">
 		SELECT * FROM interest
 		WHERE user_id = #{userId}
 	</select>
 	
+	<!-- int addInterests(Interest interest) throws SQLException; -->
 	<insert id="addInterests" parameterType="interest">
 		INSERT INTO interest (user_id,dong_code,sido_name,gugun_name) 
 		VALUES(#{userId},#{dongCode},#{sidoName},#{gugunName})
 	</insert>
 	
+	<!-- int deleteInterests(Interest interest) throws SQLException; -->
 	<update id="deleteInterests" parameterType="interest">
 		DELETE FROM interest
 		WHERE user_id = #{userId} and dong_code = #{dongCode}
 	</update>
+	
+	<!-- List<Object> getRankingIntersts(int sidoCode) throws SQLException; -->
+	<select id="getRankingIntersts" parameterType="integer" resultMap="Ranking">
+		select dong_code, sido_name, gugun_name, count(*) as count
+		FROM interest
+		where dong_code like concat(#{sidoCode}, '%')
+		group by dong_code
+		order by count desc, gugun_name asc
+		limit 0, 5;
+	</select>
 	
 </mapper>
