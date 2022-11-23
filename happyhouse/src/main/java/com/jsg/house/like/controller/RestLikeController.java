@@ -103,5 +103,18 @@ public class RestLikeController {
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "Like 게시글 별 좋아요 수를 불러온다.", notes = "관심 글 게시글 별 좋아요 수를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/countBoard/{boardid}")
+	public ResponseEntity<?> getCountLike(@PathVariable("boardid") String boardId) {
+		log.debug("Like 게시글 별 좋아요 수 : ", boardId);
+		int checkSum = service.getCountLike(boardId);
+		log.debug(checkSum+"");
+		List<Object> checkList = new ArrayList<Object>();
+		checkList.add(checkSum);
+		flag.setFlag("success");
+		flag.setData(checkList);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
 
 }

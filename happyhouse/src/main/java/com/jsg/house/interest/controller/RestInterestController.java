@@ -26,61 +26,45 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @CrossOrigin
 public class RestInterestController {
-	
+
 	@Autowired
 	private InterestService service;
-	
+
 	private HttpFlag flag = new HttpFlag();
-	
-	
+
 	@ApiOperation(value = "관심지역 리스트를 불러온다.", notes = "userid를 넣어주면 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@GetMapping("/{userid}")
 	public ResponseEntity<?> getIntersts(@PathVariable int userid) {
-		flag.setFlag("fail");
-		flag.setData(null);
-		try {
-			List<Object> list = service.getInterests(userid);
-			if(list.size() != 0) {
-				flag.setFlag("success");
-				flag.setData(list);	
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		List<Object> list = service.getInterests(userid);
+		flag.setFlag("success");
+		flag.setData(list);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	
+
+	@ApiOperation(value = "관심지역 리스트를 추가한다.", notes = "@PostMapping, 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@PostMapping
 	public ResponseEntity<?> addIntersts(@RequestBody Interest interest) {
-		flag.setFlag("fail");
+		service.addInterests(interest);
+		flag.setFlag("success");
 		flag.setData(null);
-		try {
-			int checkSum = service.addInterests(interest);
-			if(checkSum != 0) {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	
+
+	@ApiOperation(value = "관심 지역을 삭제한다.", notes = "deleteMapping, 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
 	@DeleteMapping()
 	public ResponseEntity<?> deleteIntersts(@RequestBody Interest interest) {
-		flag.setFlag("fail");
+		service.deleteInterests(interest);
+		flag.setFlag("success");
 		flag.setData(null);
-		try {
-			int checkSum = service.deleteInterests(interest);
-			if(checkSum != 0) {
-				flag.setFlag("success");
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-	
+
+	@ApiOperation(value = "관심지역 지역별 랭킹 상위 5개를 불러온다.", notes = "시도 코드를 넣어주면 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/ranking/{code}")
+	public ResponseEntity<?> getRankingIntersts(@PathVariable("code") int sidoCode) {
+		List<Object> list = service.getRankingIntersts(sidoCode);
+		flag.setFlag("success");
+		flag.setData(list);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
 }

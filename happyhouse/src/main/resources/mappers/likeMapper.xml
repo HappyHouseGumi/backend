@@ -45,4 +45,11 @@
 		where board_id = #{boardId} and user_id = #{userId}
 	</select>
 	
+	<!-- int getCountLike(String boardId) throws SQLException; -->
+	<select id="getCountLike" parameterType="string" resultType="integer">
+		select count(*) as count
+		from likeboard
+		where board_id = #{boardId};
+	</select>
+	
 </mapper>

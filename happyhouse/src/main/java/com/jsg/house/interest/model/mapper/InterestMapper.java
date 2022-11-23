@@ -13,4 +13,6 @@ public interface InterestMapper {
 
 	int deleteInterests(Interest interest) throws SQLException;
 
+	List<Object> getRankingIntersts(int sidoCode) throws SQLException;
+
 }
