@@ -28,6 +28,7 @@ public class LikeServiceImpl implements LikeService {
 	public List<Object> listLike(HashMap<String, Object> map) {
 
 		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("userId", map.get("userId"));
 		param.put("key", map.get("key") == null ? "" : (String) map.get("key"));
 		param.put("word", map.get("word") == null ? "" : map.get("word"));
 		int pgNo = (Integer)map.get("pgno") == null ? 1 : (Integer)map.get("pgno");
@@ -123,4 +124,22 @@ public class LikeServiceImpl implements LikeService {
 		}
 		return checkSum;
 	}
+
+	@Override
+	public List<Object> getLikeUser(String boardId) {
+		List<Object> likeUserList = null;
+
+		try {
+			likeUserList = mapper.getLikeUser(boardId);
+			if (likeUserList == null || likeUserList.isEmpty()) {
+				throw new NoDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NoDataException();
+		}
+
+		return likeUserList;
+	}
+	
 }

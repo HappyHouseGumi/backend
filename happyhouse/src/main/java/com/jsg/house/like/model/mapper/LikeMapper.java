@@ -20,4 +20,6 @@ public interface LikeMapper {
 
 	int getCountLike(String boardId) throws SQLException;
 
+	List<Object> getLikeUser(String boardId) throws SQLException;
+
 }
