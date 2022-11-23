@@ -17,24 +17,37 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public List<Object> getNews() {
-		final String Url = "https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query=%EB%B6%80%EB%8F%99%EC%82%B0";
-        Connection conn = Jsoup.connect(Url);
-        List<Object> list = new ArrayList<>();
-        try {
-            Document document = conn.get();
-            Elements imageUrlElements = document.getElementsByClass("news_tit");
+		final String Url = "https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=101&sid2=260";
+		Connection conn = Jsoup.connect(Url);
+		List<Object> list = new ArrayList<>();
+		try {
+			Document document = conn.get();
+			Elements elements = document.getElementsByClass("type06_headline");
+			for (Element element : elements.select("li")) {
+				HashMap<String, String> map = new HashMap<String, String>();
+				String title = "";
+				String href = "";
+				if (element.getElementsByClass("photo").size() != 0) {
+					title = element.select("dt").next().first().select("a").text();
+					href = element.select("dt").next().first().select("a").attr("abs:href");
+				} else {
+					title = element.select("dt").first().select("a").text();
+					href = element.select("dt").first().select("a").attr("abs:href");
+				}
+				map.put("title", title);
+				map.put("href", href);
+				list.add(map);
+			}
+			for (Element element : elements.select("li")) {
+				HashMap<String, String> map = new HashMap<String, String>();
+				String title = element.select("dt").next().first().select("a").text();
 
-            for (Element element : imageUrlElements) {
-            	String[] str = element.attr("abs:title").split("/");
-            	HashMap<String,String> map = new HashMap<String,String>();
-            	map.put("title", element.attr("abs:title").split("/")[str.length-1]);
-            	map.put("href", element.attr("abs:href"));
-            	list.add(map);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-		
+			}
+			System.out.println(list.size());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return list;
 	}
 

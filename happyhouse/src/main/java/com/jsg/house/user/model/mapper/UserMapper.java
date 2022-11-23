@@ -15,6 +15,8 @@ public interface UserMapper {
 	
 	int addAdmin(int id) throws SQLException;
 	
+	int checkAdmin(int id) throws SQLException;
+	
 	int modifyUser(HashMap<String,Object> map) throws SQLException;
 	
 	int checkNick(String nickName) throws SQLException;
