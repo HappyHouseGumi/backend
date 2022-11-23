@@ -28,20 +28,20 @@
 
 	<!-- int registLike(Like like) throws SQLException; -->
 	<insert id="registLike" parameterType="like">
-		insert into like_board (board_id, user_id)
+		insert into likeboard (board_id, user_id)
 		values (#{boardId}, #{userId})
 	</insert>
 
 	<!-- int deleteLike(HashMap<String, String> map) throws SQLException; -->
 	<delete id="deleteLike" parameterType="map">
-		delete from like_board
+		delete from likeboard
 		where board_id = #{boardId} and user_id = #{userId}
 	</delete>
 	
 	<!-- int checkLike(HashMap<String, Object> map) throws SQLException; -->
 	<select id="checkLike" parameterType="map" resultType="int">
 		select count(*)
-		from like_board
+		from likeboard
 		where board_id = #{boardId} and user_id = #{userId}
 	</select>
 	
