@@ -17,6 +17,8 @@ public interface UserService {
 	
 	int modifyUser(HashMap<String,Object> map);
 
+	int checkAdmin(int id);
+	
 	int checkNick(String nickName);
 
 	int loginUser(HashMap<String, String> map);

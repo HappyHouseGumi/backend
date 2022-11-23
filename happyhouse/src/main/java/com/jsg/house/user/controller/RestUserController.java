@@ -121,7 +121,17 @@ public class RestUserController {
 		}
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-
+	@GetMapping("/admin/{id}")
+	public ResponseEntity<?> checkNick(@PathVariable int id) {
+		flag.setFlag("fail");
+		flag.setData(null);
+		int checkSum = service.checkAdmin(id);
+		if (checkSum == 1) {
+			flag.setFlag("success");
+		}
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "로그인을 한다.", notes = "로그인에 성공하면 'success', 실패하면 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUser(@RequestBody HashMap<String, String> map) {

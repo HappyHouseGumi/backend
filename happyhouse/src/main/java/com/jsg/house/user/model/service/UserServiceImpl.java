@@ -188,6 +188,20 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public int checkAdmin(int id) {
+		int checkSum = 0;
+		try {
+			checkSum = mapper.checkAdmin(id);
+			if(checkSum == 1) {
+				return 1; 
+			}
+		} catch (SQLException e) {
+			return 0;
+		}
+		return 0;
+	}
+
 	
 	
 	
