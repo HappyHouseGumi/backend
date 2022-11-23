@@ -5,17 +5,18 @@
 <mapper namespace="com.jsg.house.interest.model.mapper.InterestMapper">
 	
 	<select id="getInterests" parameterType="int" resultType="interest">
-		SELECT * FROM interest_view
-		WHERE userId = #{userid}
+		SELECT * FROM interest
+		WHERE user_id = #{userId}
 	</select>
 	
 	<insert id="addInterests" parameterType="interest">
-		INSERT INTO interest (user_id,dong_code) 
-		VALUES(#{userId},#{dongCode})
+		INSERT INTO interest (user_id,dong_code,sido_name,gugun_name) 
+		VALUES(#{userId},#{dongCode},#{sidoName},#{gugunName})
 	</insert>
 	
-	<update id="deleteInterests" parameterType="int">
-		UPDATE interest set state = -1 where id = #{id};
+	<update id="deleteInterests" parameterType="interest">
+		DELETE FROM interest
+		WHERE user_id = #{userId} and dong_code = #{dongCode}
 	</update>
 	
 </mapper>

@@ -34,7 +34,7 @@
 	</select>
 	
 	<select id="getAptDealList" parameterType="string" resultMap="AptDealInfoDto"> 
-		SELECT * FROM happy_house.houseDeal where apt_code = #{code} ORDER BY no asc;
+		SELECT * FROM happy_house.houseDeal where apt_code = #{code} ORDER BY no desc;
 	</select>
 
 	<select id="getUserInterApts" parameterType="int" resultMap="AptInfoDto">

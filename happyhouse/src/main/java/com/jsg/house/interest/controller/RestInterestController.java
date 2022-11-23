@@ -67,12 +67,12 @@ public class RestInterestController {
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteIntersts(@PathVariable int id) {
+	@DeleteMapping()
+	public ResponseEntity<?> deleteIntersts(@RequestBody Interest interest) {
 		flag.setFlag("fail");
 		flag.setData(null);
 		try {
-			int checkSum = service.deleteInterests(id);
+			int checkSum = service.deleteInterests(interest);
 			if(checkSum != 0) {
 				flag.setFlag("success");
 			}
