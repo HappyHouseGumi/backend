@@ -55,9 +55,8 @@ public class RestOauthController {
 		try {
 //			jsonObject = (JSONObject) jsonParser.parse(response.getBody().toString());
 //			accessToken = jsonObject.get("access_token").toString();
-			System.out.println(accessToken);
+			System.out.println("accessToken : "+accessToken);
 			userId = service.findUserByOauth(accessToken);
-			System.out.println("1");
 			
 			if(userId == 0) {
 				throw new Exception();

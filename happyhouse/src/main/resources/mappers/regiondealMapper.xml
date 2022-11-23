@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jsg.house.data.model.mapper.RegionDealMapper">
+
+	<!-- List<Object> getAvgDeal(String sidoName) throws SQLException; -->
+	<select id="getAvgDeal" parameterType="string" resultType="regionDeal">
+		select sido_name as sidoName, deal_year as dealYear, deal_amount as
+		dealAmount
+		from chart_area_year_avg
+		where sido_name = #{sidoName};
+	</select>
+	
+</mapper>
