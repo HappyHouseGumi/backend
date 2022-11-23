@@ -19,4 +19,6 @@ public interface LikeService {
 
 	int getCountLike(String boardId);
 
+	List<Object> getLikeUser(String boardId);
+
 }
