@@ -1,6 +1,7 @@
 package com.jsg.house.data.model.service;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,10 +11,22 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.jsg.house.data.model.mapper.RegionDealMapper;
+import com.jsg.house.exception.NoDataException;
 
 @Service
 public class DataServiceImpl implements DataService {
+	
+	private RegionDealMapper mapper;
+	
+	@Autowired
+	public DataServiceImpl(RegionDealMapper mapper) {
+		super();
+		this.mapper = mapper;
+	}
 
 	@Override
 	public List<Object> getNews() {
@@ -41,14 +54,30 @@ public class DataServiceImpl implements DataService {
 			for (Element element : elements.select("li")) {
 				HashMap<String, String> map = new HashMap<String, String>();
 				String title = element.select("dt").next().first().select("a").text();
-
 			}
-			System.out.println(list.size());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return list;
+	}
+
+	@Override
+	public List<Object> getAvgDeal(String sidoName) {
+		sidoName = sidoName.replaceAll("\"", "");
+		List<Object> avgList = null;
+
+		try {
+			avgList = mapper.getAvgDeal(sidoName);
+			if (avgList == null || avgList.isEmpty()) {
+				throw new NoDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NoDataException();
+		}
+
+		return avgList;
 	}
 
 }
