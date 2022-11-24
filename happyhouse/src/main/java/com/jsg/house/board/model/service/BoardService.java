@@ -23,4 +23,5 @@ public interface BoardService {
 
 	int getTotalBoard(HashMap<String, Object> map);
 
+	List<Object> listBoardByName(String name);
 }

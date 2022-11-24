@@ -32,6 +32,14 @@
 		order by id desc
 		limit #{start}, #{listsize}
 	</select>
+	
+	<select id="listBoardByName" parameterType="String" resultType="board">
+		select id, userId, nickName, subject, title, content, regDate, hit
+		from board_view
+		where subject = #{name}
+		order by id desc
+		limit 0, 5
+	</select>
 
 
 	<!-- int writeBoard(Board board) throws SQLException; -->
