@@ -8,7 +8,7 @@
 	<select id="listQnaComment" parameterType="int" resultType="QnaComment">
 		SELECT id, qnaId, content, regDate
 		FROM qnacomment_view
-		WHERE qnaId = #{qnaId}
+		WHERE qnaId = #{qnaId} order by id desc
 	</select>
 
 	<!-- int writeComment(Comment comment) throws SQLException; -->

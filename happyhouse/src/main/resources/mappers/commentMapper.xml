@@ -19,7 +19,7 @@
 		select id, boardId, userId, nickName, content, regDate
 		from comment_view
 		where boardId = #{boardId}
-		order by id desc
+		order by id asc
 	</select>
 
 	<!-- int writeComment(Comment comment) throws SQLException; -->
