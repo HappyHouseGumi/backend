@@ -19,7 +19,7 @@
 	
 	<!-- int addInterests(Interest interest) throws SQLException; -->
 	<insert id="addInterests" parameterType="interest">
-		INSERT INTO interest (user_id,dong_code,sido_name,gugun_name) 
+		INSERT IGNORE INTO interest (user_id,dong_code,sido_name,gugun_name) 
 		VALUES(#{userId},#{dongCode},#{sidoName},#{gugunName})
 	</insert>
 	
