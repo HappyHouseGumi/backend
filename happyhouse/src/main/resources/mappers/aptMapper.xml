@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jsg.house.apt.model.mapper.AptInfoMapper">	
+	
+	<resultMap type="AptDeal" id="AptDealInfoDto">
+		<result column="no" property="no"/>
+		<result column="deal_amount" property="dealAmount"/>
+		<result column="deal_year" property="dealYear"/>
+		<result column="deal_month" property="dealMonth"/>
+		<result column="deal_day" property="dealDay"/>
+		<result column="area" property="area"/>
+		<result column="floor" property="floor"/>
+		<result column="apt_code" property="aptCode"/>
+	</resultMap>
+	
+	<resultMap type="aptinfo" id="AptInfoDto">
+		<result column="apt_code" property="aptcode"/>
+		<result column="build_year" property="buildYear"/>
+		<result column="road_name" property="roadName"/>
+		<result column="apartment_name" property="apartmentName"/>
+		<result column="lat" property="lat"/>
+		<result column="lng" property="lng"/>
+	</resultMap>
+	<select id="getAptList" parameterType="string" resultMap="AptInfoDto">
+		SELECT apt_code, build_year, road_name, apartment_name, lat, lng  FROM houseinfo
+		WHERE dong_code = #{code} 
+	</select>
+	<select id="getsidogugunAptList" parameterType="string" resultMap="AptInfoDto">
+		SELECT apt_code, build_year, road_name, apartment_name, lat, lng  FROM houseinfo h
+		join dongcode d on h.dong_code = d.dong_code
+		WHERE d.sido_name = #{sido} and d.gugun_name = #{gugun};
+	</select>
+	
+	<select id="getAptDealList" parameterType="string" resultMap="AptDealInfoDto"> 
+		SELECT * FROM happy_house.houseDeal where apt_code = #{code} ORDER BY no desc;
+	</select>
+
+	<select id="getUserInterApts" parameterType="int" resultMap="AptInfoDto">
+		SELECT i.apt_code, h.lat, h.lng FROM interestapt i join houseinfo h on i.apt_code = h.apt_code
+		where user_id = #{userId}
+	</select>
+	<insert id="addUserInterApt" parameterType="map">
+		INSERT INTO interestapt (user_id,apt_code) VALUES (#{userId},#{aptCode})
+	</insert>
+	<delete id="deleteUserInterApt" parameterType="map">
+		DELETE FROM interestapt WHERE user_id = #{userId} and apt_code = #{aptCode}
+	</delete>
+</mapper>

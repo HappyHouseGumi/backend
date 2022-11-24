@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jsg.house.comment.model.mapper.CommentMapper">
+
+	<!-- <resultMap type="comment" id="CommentDto">
+		<result column="id" property="id" />
+		<result column="board_id" property="boardId" />
+		<result column="user_id" property="userId" />
+		<result column="nick_name" property="nickName" />
+		<result column="content" property="content" />
+		<result column="reg_date" property="regDate" />
+		<result column="state" property="state" />
+	</resultMap> -->
+	
+	<!-- List<Object> listComment(String boardId) throws SQLException; -->
+	<select id="listComment" parameterType="string" resultType="comment">
+		select id, boardId, userId, nickName, content, regDate
+		from comment_view
+		where boardId = #{boardId}
+		order by id asc
+	</select>
+
+	<!-- int writeComment(Comment comment) throws SQLException; -->
+	<insert id="writeComment" parameterType="comment">
+		insert into comment (board_id, user_id, content)
+		values (#{boardId}, #{userId}, #{content})
+	</insert>
+
+	<!-- int modifyComment(Comment comment) throws SQLException; -->
+	<update id="modifyComment" parameterType="map">
+		update comment
+		set content = #{content}
+		where id = #{id}
+	</update>
+
+	<!-- int deleteComment(String commentId) throws SQLException; -->
+	<delete id="deleteComment" parameterType="string">
+		update comment
+		set state = -1
+		where id = #{commentId}
+	</delete>
+	
+</mapper>

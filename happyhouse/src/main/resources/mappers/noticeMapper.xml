@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.jsg.house.notice.model.mapper.NoticeMapper">
+	
+	<sql id="search">
+		<if test="word != null and word != ''">
+			where title like concat('%', #{word}, '%')
+		</if>
+	</sql>
+
+	<!-- int getTotalNotice(HashMap<String, Object> map) throws SQLException; -->
+	<select id="getTotalNotice" parameterType="map" resultType="int">
+		select count(*)
+		from notice_view
+		<include refid="search"></include>
+	</select>
+	
+	<!-- List<Object> listNotice(HashMap<String, Object> map) throws SQLException; -->
+	<select id="listNotice" parameterType="map" resultType="notice">
+		select id, userId, title, content, regDate
+		from notice_view
+		<include refid="search"></include>
+		order by id desc
+		limit #{start}, #{listsize}
+	</select>
+
+	<!-- int writeNotice(Notice notice) throws SQLException; -->
+	<insert id="writeNotice" parameterType="notice">
+		insert into notice
+		(user_id, title, content)
+		values (#{userId}, #{title}, #{content})
+	</insert>
+	
+	<!-- List<Object> viewNotice(String noticeId) throws SQLException; -->
+	<select id="viewNotice" parameterType="string" resultType="notice">
+		select id, userId, title, content, regDate
+		from notice_view
+		where id = #{noticeId}
+	</select>
+	
+	<!-- int modifyNotice(HashMap<String, Object> map) throws SQLException; -->
+	<update id="modifyNotice" parameterType="map">
+		update notice
+		<trim prefix="set" suffixOverrides=",">
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>
+		</trim>
+		where id =#{id}
+	</update>
+	
+	<!-- int deleteNotice(String noticeId) throws SQLException; -->
+	<delete id="deleteNotice" parameterType="string">
+		update notice
+		set state = -1
+		where id = #{noticeId}
+	</delete>
+	
+</mapper>

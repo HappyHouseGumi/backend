@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jsg.house.like.model.mapper.LikeMapper">
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			and ${key} like concat('%', #{word}, '%')
+		</if>
+	</sql>
+	
+	<!-- int getTotalLike(HashMap<String, Object> map) throws SQLException; -->
+	<select id="getTotalLike" parameterType="map" resultType="int">
+		select count(*)
+		from like_view
+		<include refid="search"></include>
+	</select>
+	
+	<!-- List<Object> listLike(HashMap<String, Object> map) throws SQLException; -->
+	<select id="listLike" parameterType="map" resultType="likeBoard">
+		select boardId, userId, nickName, subject, title
+		from like_view
+		where userId = #{userId}
+		<include refid="search"></include>
+		order by regDate desc
+		limit #{start}, #{listsize}
+	</select>
+
+	<!-- int registLike(Like like) throws SQLException; -->
+	<insert id="registLike" parameterType="like">
+		insert into likeboard (board_id, user_id)
+		values (#{boardId}, #{userId})
+	</insert>
+
+	<!-- int deleteLike(HashMap<String, String> map) throws SQLException; -->
+	<delete id="deleteLike" parameterType="map">
+		delete from likeboard
+		where board_id = #{boardId} and user_id = #{userId}
+	</delete>
+	
+	<!-- int checkLike(HashMap<String, Object> map) throws SQLException; -->
+	<select id="checkLike" parameterType="map" resultType="int">
+		select count(*)
+		from likeboard
+		where board_id = #{boardId} and user_id = #{userId}
+	</select>
+	
+	<!-- int getCountLike(String boardId) throws SQLException; -->
+	<select id="getCountLike" parameterType="string" resultType="integer">
+		select count(*) as count
+		from likeboard
+		where board_id = #{boardId};
+	</select>
+	
+	<!-- List<Object> getLikeUser(String boardId) throws SQLException; -->
+	<select id="getLikeUser" parameterType="string" resultType="string">
+		select user.nick_name as likeUser
+		from like_view left join user on like_view.userId = user.id
+		where boardId = #{boardId};
+	</select>
+</mapper>

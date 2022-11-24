@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jsg.house.board.model.mapper.BoardMapper">
+
+	<!-- <resultMap type="board" id="BoardDto"> <result column="id" property="id"/> 
+		<result column="user_id" property="userId"/> <result column="nick_name" property="nickName"/> 
+		<result column="subject" property="subject"/> <result column="title" property="title"/> 
+		<result column="content" property="content"/> <result column="reg_date" property="regDate"/> 
+		<result column="hit" property="hit"/> <result column="state" property="state"/> 
+		</resultMap> -->
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			where ${key} like concat('%', #{word}, '%')
+		</if>
+	</sql>
+
+	<!-- int getTotalBoard(HashMap<String, Object> map) throws SQLException; -->
+	<select id="getTotalBoard" parameterType="map" resultType="int">
+		select count(*)
+		from board_view
+		<include refid="search"></include>
+	</select>
+
+	<!-- List<Object> listBoard(HashMap<String, Object> map) throws SQLException; -->
+	<select id="listBoard" parameterType="map" resultType="board">
+		select id, userId, nickName, subject, title, content, regDate, hit
+		from board_view
+		<include refid="search"></include>
+		order by id desc
+		limit #{start}, #{listsize}
+	</select>
+	
+	<select id="listBoardByName" parameterType="String" resultType="board">
+		select id, userId, nickName, subject, title, content, regDate, hit
+		from board_view
+		where subject = #{name}
+		order by id desc
+		limit 0, 5
+	</select>
+
+
+	<!-- int writeBoard(Board board) throws SQLException; -->
+	<insert id="writeBoard" parameterType="board">
+		insert into board
+		(user_id, subject, title, content)
+		values (#{userId}, #{subject},
+		#{title}, #{content})
+	</insert>
+
+	<!-- int hitupdate(String boardId) throws SQLException; -->
+	<update id="hitupdate" parameterType="string">
+		update board
+		set hit = hit +
+		1
+		where id =#{boardId}
+	</update>
+
+	<!-- List<Object> viewBoard(String boardId) throws SQLException; -->
+	<select id="viewBoard" parameterType="string" resultType="board">
+		select
+		id, userId, nickName, subject, title, content, regDate, hit
+		from
+		board_view
+		where id = #{boardId}
+	</select>
+
+	<!-- int modifyBoard(Board board) throws SQLException; -->
+	<update id="modifyBoard" parameterType="map">
+		update board
+		<trim prefix="set" suffixOverrides=",">
+			<if test="subject != null">
+				subject = #{subject},
+			</if>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>
+		</trim>
+		where id =#{id}
+	</update>
+
+	<!-- int deleteBoard(String boardId) throws SQLException; -->
+	<delete id="deleteBoard" parameterType="string">
+		update board
+		set state =
+		-1
+		where id = #{boardId}
+	</delete>
+
+	<!-- List<Object> getSidoName() throws SQLException; -->
+	<select id="getSidoName" resultType="boardSubject">
+		select distinct id, sidoName
+		from subject_view
+	</select>
+
+	<!-- List<Object> getGugunName(String code) throws SQLException; -->
+	<select id="getGugunName" parameterType="string"
+		resultType="boardSubject">
+		select id, sidoName, gugunName
+		from subject_view
+		where id =
+		#{code}
+	</select>
+
+</mapper>
