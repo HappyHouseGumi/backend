@@ -30,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		param.put("key", map.get("key") == null ? "" : (String) map.get("key"));
 		param.put("word", map.get("word") == null ? "" : map.get("word"));
-		int pgNo = (Integer)map.get("pgno") == null ? 1 : (Integer)map.get("pgno");
+		int pgNo = (Integer) map.get("pgno") == null ? 1 : (Integer) map.get("pgno");
 		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
 		param.put("start", start);
 		param.put("listsize", SizeConstant.LIST_SIZE);
@@ -150,7 +150,7 @@ public class BoardServiceImpl implements BoardService {
 
 		return dongcode;
 	}
-	
+
 	@Override
 	public int getTotalBoard(HashMap<String, Object> map) {
 		int checkSum = 0;
@@ -164,6 +164,23 @@ public class BoardServiceImpl implements BoardService {
 			throw new NotChangeDataException();
 		}
 		return checkSum;
+	}
+
+	@Override
+	public List<Object> listBoardByName(String name) {
+		List<Object> boardList = null;
+
+		try {
+			boardList = mapper.listBoardByName(name);
+			if (boardList == null || boardList.isEmpty()) {
+				throw new NoDataException();
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new NoDataException();
+		}
+
+		return boardList;
 	}
 
 }

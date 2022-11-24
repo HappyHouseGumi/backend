@@ -39,6 +39,7 @@
 
 	<select id="getUserInterApts" parameterType="int" resultMap="AptInfoDto">
 		SELECT i.apt_code, h.lat, h.lng FROM interestapt i join houseinfo h on i.apt_code = h.apt_code
+		where user_id = #{userId}
 	</select>
 	<insert id="addUserInterApt" parameterType="map">
 		INSERT INTO interestapt (user_id,apt_code) VALUES (#{userId},#{aptCode})

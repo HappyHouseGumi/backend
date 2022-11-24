@@ -26,4 +26,5 @@ public interface BoardMapper {
 
 	int getTotalBoard(HashMap<String, Object> map) throws SQLException;
 
+	List<Object> listBoardByName(String name) throws SQLException;
 }

@@ -132,5 +132,16 @@ public class RestBoardController {
 		flag.setData(null);
 		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
 	}
-
+	
+	@ApiOperation(value = "Board 리스트를 불러온다.", notes = "게시판 전체 리스트를 불러온다. 'success' 또는 'fail' 문자열과 데이터를 반환한다.", response = String.class)
+	@GetMapping("/area/{name}")
+	public ResponseEntity<?> listBoardByName(@PathVariable String name) {
+		log.debug("Board List : ");
+		
+		List<Object> boardList = service.listBoardByName(name);
+		log.debug(boardList.toString());
+		flag.setFlag("success");
+		flag.setData(boardList);
+		return new ResponseEntity<HttpFlag>(flag, HttpStatus.OK);
+	}
 }
